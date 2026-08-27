@@ -36,6 +36,7 @@ A organização do projeto foi pensada para facilitar a manutenção e o entendi
 - Construção do banco de dados MySQL e tabelas.
 - Integração e processamento de dados via PHP (Login, Cadastro, Produtos, Carrinho e Checkout).
 
+```text
 MagicMerch/
 │
 ├── README.md                 (Documentação atualizada sobre o projeto e estrutura)
@@ -70,3 +71,4 @@ MagicMerch/
     └── img/                  (Imagens)
         ├── produtos/
         └── artistas/
+```
