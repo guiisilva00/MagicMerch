@@ -1,0 +1,9 @@
+﻿/* Admin Dashboard Style */
+body {
+    background-color: #f4f4f4;
+    font-family: sans-serif;
+}
+.sidebar {
+    background-color: var(--raspberry-plum);
+    color: white;
+}
