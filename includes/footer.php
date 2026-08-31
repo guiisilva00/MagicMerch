@@ -1,6 +1,5 @@
-﻿    </main>
     <footer>
-        <p>&copy; 2026 MagicMerch. Todos os direitos reservados.</p>
+        <!-- Informações institucionais e links necessários -->
     </footer>
 </body>
 </html>
