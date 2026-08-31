@@ -74,41 +74,48 @@ $heroSlides = [
 ];
 
 $artists = [
-    [
-        'name' => 'The Weeknd',
-        'genre' => 'R&B / Pop',
-        'items' => 24,
-        'img' => 'https://images.unsplash.com/photo-1652781335326-b7e64b014c90?w=500&h=640&fit=crop&auto=format',
-    ],
-    [
-        'name' => 'Billie Eilish',
-        'genre' => 'Alt Pop',
-        'items' => 18,
-        'img' => 'https://images.unsplash.com/photo-1770062421988-7929b4748e29?w=500&h=640&fit=crop&auto=format',
-    ],
-    [
-        'name' => 'Arctic Monkeys',
-        'genre' => 'Indie Rock',
-        'items' => 31,
-        'img' => 'https://images.unsplash.com/photo-1771894431319-7eb49cda5adb?w=500&h=640&fit=crop&auto=format',
-    ],
-    [
-        'name' => 'Doja Cat',
-        'genre' => 'Pop / Hip-Hop',
-        'items' => 15,
-        'img' => 'https://images.unsplash.com/photo-1765064067361-aca81b93b37b?w=500&h=640&fit=crop&auto=format',
-    ],
-    [
-        'name' => 'Radiohead',
-        'genre' => 'Alt Rock',
-        'items' => 22,
-        'img' => 'https://images.unsplash.com/photo-1748357641562-057e48a8ebd5?w=500&h=640&fit=crop&auto=format',
-    ],
-    [
-        'name' => 'Dua Lipa',
-        'genre' => 'Pop / Dance',
-        'items' => 19,
-        'img' => 'https://images.unsplash.com/photo-1577565201041-2659d583bb6f?w=500&h=640&fit=crop&auto=format',
-    ],
+
+            [
+                'name' => 'Matuê',
+                'genre' => 'Trap',
+                'items' => 24,
+                'img' => 'https://images.unsplash.com/photo-1652781335326-b7e64b014c90?w=500&h=640&fit=crop&auto=format',
+            ],
+            [
+                'name' => 'Veigh',
+                'genre' => 'Trap / Hip-Hop',
+                'items' => 21,
+                'img' => 'https://images.unsplash.com/photo-1770062421988-7929b4748e29?w=500&h=640&fit=crop&auto=format',
+            ],
+            [
+                'name' => 'Teto',
+                'genre' => 'Trap',
+                'items' => 18,
+                'img' => 'https://images.unsplash.com/photo-1771894431319-7eb49cda5adb?w=500&h=640&fit=crop&auto=format',
+            ],
+            [
+                'name' => 'WIU',
+                'genre' => 'Trap / Rap',
+                'items' => 16,
+                'img' => 'https://images.unsplash.com/photo-1765064067361-aca81b93b37b?w=500&h=640&fit=crop&auto=format',
+            ],
+            [
+                'name' => 'Orochi',
+                'genre' => 'Trap / Rap',
+                'items' => 22,
+                'img' => 'https://images.unsplash.com/photo-1748357641562-057e48a8ebd5?w=500&h=640&fit=crop&auto=format',
+            ],
+            [
+                'name' => 'KayBlack',
+                'genre' => 'Trap / Funk',
+                'items' => 19,
+                'img' => 'https://images.unsplash.com/photo-1577565201041-2659d583bb6f?w=500&h=640&fit=crop&auto=format',
+            ],
+            [
+                'name' => 'MC Ryan SP',
+                'genre' => 'Trap / Funk',
+                'items' => 15,
+                'img' => 'https://images.unsplash.com/photo-1652781335326-b7e64b014c90?w=500&h=640&fit=crop&auto=format',
+            ],
 ];
 ?>
