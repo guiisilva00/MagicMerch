@@ -90,4 +90,3 @@ INSERT INTO produtos (nome, descricao, preco, artista_id, categoria, estoque) VA
 ('Figura Naruto - Hokage', 'Miniatura do Naruto como Hokage', 39.99, 4, 'acessorio', 10),
 ('Poster Demon Slayer', 'Poster colorido 50x70 cm', 32.99, 4, 'poster', 22),
 ('Moleton Anime Mix', 'Moleton com vários personagens anime', 79.99, 4, 'moleton', 6);
-

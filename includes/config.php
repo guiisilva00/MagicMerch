@@ -56,21 +56,6 @@ $heroSlides = [
             ['img' => 'https://images.unsplash.com/photo-1772450235995-ecd6b9c17aab?w=400&h=560&fit=crop&auto=format', 'alt' => 'Look de campanha'],
         ],
     ],
-    [
-        'collection' => 'Outlet HM — até 50% off',
-        'season' => 'SALE',
-        'headline' => ['OUTLET', 'HM'],
-        'subheading' => 'Até 50% de desconto',
-        'description' => 'Peças selecionadas com os melhores preços. Só enquanto durarem os estoques.',
-        'cta' => 'Ver ofertas',
-        'accentColor' => $brand['raspberryPlum'],
-        'panels' => [
-            ['img' => 'https://images.unsplash.com/photo-1647218947427-d783309440d2?w=600&h=900&fit=crop&auto=format', 'alt' => 'Modelo outlet'],
-            ['img' => 'https://images.unsplash.com/photo-1532074198010-97d0c3700b7a?w=500&h=700&fit=crop&auto=format', 'alt' => 'Modelo masculino'],
-            ['img' => 'https://images.unsplash.com/photo-1696086152513-c74dc1d4b135?w=400&h=500&fit=crop&auto=format', 'alt' => 'Produto outlet'],
-            ['img' => 'https://images.unsplash.com/photo-1549298222-1c31e8915347?w=400&h=560&fit=crop&auto=format', 'alt' => 'Campanha outlet'],
-        ],
-    ],
 ];
 
 $artists = [

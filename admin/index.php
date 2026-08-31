@@ -1,13 +1,14 @@
-﻿<?php
-// include '../includes/header_admin.php'; (Opcional)
-?>
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
     <title>Admin Dashboard</title>
     <link rel='stylesheet' href='../assets/css/admin.css'>
 </head>
+
+<?php
+include '../includes/header.php';
+?>
 
 <body>
     <h1>Dashboard Administrativo</h1>
@@ -16,4 +17,9 @@
     <p>Resumo de vendas e itens.</p>
 </body>
 
+<?php
+include '../includes/footer.php';
+?>
+
 </html>
+
