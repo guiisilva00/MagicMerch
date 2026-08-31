@@ -46,7 +46,7 @@ $activeNav = 'Home'; // Could be dynamic based on current page
             <!-- Logo -->
             <div class="logo">
                 <a href="index.php">
-                    <img src="assets/img/logo.svg" alt="MagicMerch">
+                    <img src="assets/img/logo/logo.svg" alt="MagicMerch">
                 </a>
             </div>
 
