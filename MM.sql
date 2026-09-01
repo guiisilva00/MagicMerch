@@ -1,92 +1,14 @@
--- MagicMerch - Banco de Dados
-
-CREATE DATABASE IF NOT EXISTS magicmerch_db;
+CREATE DATABASE IF NOT EXISTS magicmerch_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE magicmerch_db;
-
--- Tabela de usuários
-CREATE TABLE usuarios (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(100) NOT NULL,
-  email VARCHAR(100) UNIQUE NOT NULL,
-  senha VARCHAR(255) NOT NULL,
-  telefone VARCHAR(20),
-  data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Tabela de artistas
-CREATE TABLE artistas (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(150) NOT NULL UNIQUE,
-  descricao TEXT
-);
-
--- Tabela de produtos
-CREATE TABLE produtos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(150) NOT NULL,
-  descricao TEXT,
-  preco DECIMAL(10,2) NOT NULL,
-  artista_id INT NOT NULL,
-  categoria VARCHAR(50),
-  estoque INT DEFAULT 0,
-  FOREIGN KEY (artista_id) REFERENCES artistas(id)
-);
-
--- Tabela de carrinho
-CREATE TABLE carrinho (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  usuario_id INT NOT NULL,
-  produto_id INT NOT NULL,
-  quantidade INT DEFAULT 1,
-  data_adicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-  FOREIGN KEY (produto_id) REFERENCES produtos(id)
-);
-
--- Tabela de pedidos
-CREATE TABLE pedidos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  usuario_id INT NOT NULL,
-  valor_total DECIMAL(10,2) NOT NULL,
-  status VARCHAR(50) DEFAULT 'pendente',
-  endereco VARCHAR(255),
-  data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-);
-
--- Tabela de itens do pedido
-CREATE TABLE itens_pedido (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  pedido_id INT NOT NULL,
-  produto_id INT NOT NULL,
-  quantidade INT NOT NULL,
-  preco_unitario DECIMAL(10,2) NOT NULL,
-  FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
-  FOREIGN KEY (produto_id) REFERENCES produtos(id)
-);
-
--- Inserir alguns usuários
-INSERT INTO usuarios (nome, email, senha, telefone) VALUES
-('João Silva', 'joao@email.com', '123456', '11999999999'),
-('Maria Santos', 'maria@email.com', '123456', '11988888888'),
-('Pedro Oliveira', 'pedro@email.com', '123456', '11977777777');
-
--- Inserir artistas
-INSERT INTO artistas (nome, descricao) VALUES
-('The Beatles', 'Banda de rock clássica britânica'),
-('Taylor Swift', 'Cantora de pop americano'),
-('K-pop Artists', 'Artistas de música coreana'),
-('Anime Classics', 'Personagens de anime famosos');
-
--- Inserir produtos
-INSERT INTO produtos (nome, descricao, preco, artista_id, categoria, estoque) VALUES
-('Camiseta The Beatles - Yellow Submarine', 'Camiseta 100% algodão com design clássico', 59.99, 1, 'camiseta', 15),
-('Moleton The Beatles - Abbey Road', 'Moleton confortável com estampa do álbum', 89.99, 1, 'moleton', 8),
-('Caneca The Beatles - Logo Preto', 'Caneca cerâmica para café/chá', 29.99, 1, 'caneca', 25),
-('Camiseta Taylor Swift - Lover', 'Camiseta rosa com arte do álbum Lover', 49.99, 2, 'camiseta', 12),
-('Poster Taylor Swift - Red', 'Poster 60x40 cm do álbum Red', 35.99, 2, 'poster', 30),
-('Camiseta BTS - Dynamite', 'Camiseta preta com logo do BTS', 54.99, 3, 'camiseta', 20),
-('Boné K-pop - BLACKPINK', 'Boné de algodão com logo BLACKPINK', 44.99, 3, 'acessorio', 18),
-('Figura Naruto - Hokage', 'Miniatura do Naruto como Hokage', 39.99, 4, 'acessorio', 10),
-('Poster Demon Slayer', 'Poster colorido 50x70 cm', 32.99, 4, 'poster', 22),
-('Moleton Anime Mix', 'Moleton com vários personagens anime', 79.99, 4, 'moleton', 6);
+CREATE TABLE usuarios (id INT AUTO_INCREMENT PRIMARY KEY,nome VARCHAR(100) NOT NULL,email VARCHAR(100) NOT NULL UNIQUE,senha VARCHAR(255) NOT NULL,telefone VARCHAR(20),tipo ENUM('cliente','administrador') NOT NULL DEFAULT 'cliente',data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE artistas (id INT AUTO_INCREMENT PRIMARY KEY,nome VARCHAR(150) NOT NULL UNIQUE,descricao TEXT);
+CREATE TABLE produtos (id INT AUTO_INCREMENT PRIMARY KEY,nome VARCHAR(150) NOT NULL,descricao TEXT NOT NULL,preco DECIMAL(10,2) NOT NULL,artista_id INT NOT NULL,categoria VARCHAR(50) NOT NULL,estoque INT NOT NULL DEFAULT 0,imagem VARCHAR(255),cor VARCHAR(50),tamanho VARCHAR(50),destaque TINYINT(1) NOT NULL DEFAULT 0,vendas INT NOT NULL DEFAULT 0,FOREIGN KEY (artista_id) REFERENCES artistas(id));
+CREATE TABLE enderecos (id INT AUTO_INCREMENT PRIMARY KEY,usuario_id INT NOT NULL,apelido VARCHAR(50) NOT NULL DEFAULT 'Endereço',cep VARCHAR(9) NOT NULL,logradouro VARCHAR(150) NOT NULL,numero VARCHAR(20) NOT NULL,complemento VARCHAR(100),bairro VARCHAR(100) NOT NULL,cidade VARCHAR(100) NOT NULL,estado CHAR(2) NOT NULL,principal TINYINT(1) NOT NULL DEFAULT 0,FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE);
+CREATE TABLE favoritos (usuario_id INT NOT NULL,produto_id INT NOT NULL,data_adicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY(usuario_id,produto_id),FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,FOREIGN KEY(produto_id) REFERENCES produtos(id) ON DELETE CASCADE);
+CREATE TABLE avaliacoes (id INT AUTO_INCREMENT PRIMARY KEY,usuario_id INT NOT NULL,produto_id INT NOT NULL,nota TINYINT NOT NULL,comentario TEXT NOT NULL,data_avaliacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,UNIQUE KEY avaliacao_unica(usuario_id,produto_id),FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,FOREIGN KEY(produto_id) REFERENCES produtos(id) ON DELETE CASCADE);
+CREATE TABLE carrinho (id INT AUTO_INCREMENT PRIMARY KEY,usuario_id INT NOT NULL,produto_id INT NOT NULL,quantidade INT NOT NULL DEFAULT 1,data_adicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,UNIQUE KEY carrinho_unico(usuario_id,produto_id),FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,FOREIGN KEY(produto_id) REFERENCES produtos(id) ON DELETE CASCADE);
+CREATE TABLE pedidos (id INT AUTO_INCREMENT PRIMARY KEY,usuario_id INT NOT NULL,valor_total DECIMAL(10,2) NOT NULL,status ENUM('aguardando_pagamento','pagamento_confirmado','em_producao_separacao','enviado','concluido') NOT NULL DEFAULT 'aguardando_pagamento',modalidade_entrega ENUM('entrega','retirada') NOT NULL,endereco VARCHAR(255),frete DECIMAL(10,2) NOT NULL DEFAULT 0,forma_pagamento ENUM('pix','cartao') NOT NULL,pagamento_confirmado TINYINT(1) NOT NULL DEFAULT 1,data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,FOREIGN KEY(usuario_id) REFERENCES usuarios(id));
+CREATE TABLE itens_pedido (id INT AUTO_INCREMENT PRIMARY KEY,pedido_id INT NOT NULL,produto_id INT NOT NULL,quantidade INT NOT NULL,preco_unitario DECIMAL(10,2) NOT NULL,FOREIGN KEY(pedido_id) REFERENCES pedidos(id),FOREIGN KEY(produto_id) REFERENCES produtos(id));
+INSERT INTO usuarios(nome,email,senha,telefone,tipo) VALUES ('Administração MagicMerch','admin@magicmerch.local','$2y$10$b606TIJfMqs3I4d.FHClDeyWWRZAeHiMVJEaBLLc25UK7fOEUyLGS','11999990000','administrador'),('João Silva','joao@email.com','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.','11999999999','cliente');
+INSERT INTO artistas(nome,descricao) VALUES ('The Beatles','Banda de rock clássica britânica'),('Taylor Swift','Cantora de pop americana'),('BTS','Grupo de música sul-coreano'),('Anime Classics','Personagens de anime populares');
+INSERT INTO produtos(nome,descricao,preco,artista_id,categoria,estoque,imagem,cor,tamanho,destaque) VALUES ('Camiseta The Beatles - Yellow Submarine','Camiseta de algodão com arte inspirada no álbum Yellow Submarine.',59.90,1,'camiseta',15,NULL,'Amarela','P, M, G',1),('Moletom The Beatles - Abbey Road','Moletom confortável com estampa inspirada no álbum Abbey Road.',89.90,1,'moletom',8,NULL,'Preto','P, M, G',1),('Caneca The Beatles - Logo Preto','Caneca de cerâmica para colecionadores.',29.90,1,'caneca',25,NULL,'Branca',NULL,0),('Camiseta Taylor Swift - Lover','Camiseta rosa com arte inspirada no álbum Lover.',49.90,2,'camiseta',12,NULL,'Rosa','P, M, G',1),('Pôster Taylor Swift - Red','Pôster colorido de 60 por 40 centímetros.',35.90,2,'poster',30,NULL,NULL,NULL,0),('Camiseta BTS - Dynamite','Camiseta preta com logo do BTS.',54.90,3,'camiseta',20,NULL,'Preta','P, M, G',1),('Boné BTS','Boné de algodão com aplicação frontal.',44.90,3,'acessorio',18,NULL,'Preto','Único',0),('Figura Naruto - Hokage','Miniatura do Naruto como Hokage.',39.90,4,'acessorio',10,NULL,NULL,NULL,0),('Pôster Demon Slayer','Pôster colorido de 50 por 70 centímetros.',32.90,4,'poster',22,NULL,NULL,NULL,0),('Moletom Anime Mix','Moletom com vários personagens de anime.',79.90,4,'moletom',0,NULL,'Cinza','P, M, G',0);

@@ -1,9 +1,1 @@
-﻿/* Admin Dashboard Style */
-body {
-    background-color: #f4f4f4;
-    font-family: sans-serif;
-}
-.sidebar {
-    background-color: var(--raspberry-plum);
-    color: white;
-}
+.pagina-admin{font-family:Arial,sans-serif;background:#f8fafc;color:#172033}.cabecalho-admin,.navegacao-admin{display:flex;gap:1rem;padding:1rem 5%;background:#172033;color:#fff}.cabecalho-admin a{color:#fff}.navegacao-admin{background:#fff;color:#172033;border-bottom:1px solid #ddd}.conteudo-admin{max-width:1200px;margin:2rem auto;padding:0 1rem}.form-admin{display:grid;gap:.75rem;max-width:760px;padding:1rem;background:#fff;border:1px solid #ddd}.form-admin input,.form-admin select,.form-admin textarea{padding:.6rem;font:inherit}.form-admin button,table button{padding:.5rem .8rem;background:#ac359c;color:#fff;border:0;cursor:pointer}.cards-admin{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1rem 0}.cards-admin article{padding:1rem;background:#fff;border:1px solid #ddd}.cards-admin strong{display:block;font-size:1.5rem;margin-top:.5rem}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:.75rem;border:1px solid #ddd;text-align:left}.baixo-estoque{background:#fff1f2}.erro{color:#b91c1c}@media(max-width:600px){.cards-admin{grid-template-columns:1fr}table{font-size:.8rem}}

@@ -1,4 +1,4 @@
-/* Base Reset & Fonts */
+/* Configurações gerais e fontes. */
 * {
   margin: 0;
   padding: 0;
@@ -37,7 +37,7 @@ button {
   .container { padding: 0 4rem; }
 }
 
-/* Announcement Strip */
+/* Faixa de avisos. */
 .announcement-strip {
   width: 100%;
   padding: 0.625rem 0;
@@ -50,7 +50,7 @@ button {
   background: linear-gradient(90deg, #ac359c, #e41169, #f25496);
 }
 
-/* Header */
+/* Cabeçalho. */
 .main-header {
   background-color: white;
   border-bottom: 1px solid #f5f5f5;
@@ -152,7 +152,7 @@ button {
   background-color: #e41169;
 }
 
-/* Hero Section */
+/* Destaques principais. */
 .hero-section {
   position: relative;
   width: 100%;
@@ -374,7 +374,7 @@ button {
   .arrow-left, .arrow-right { display: none; }
 }
 
-/* Artists Section */
+/* Seção de artistas. */
 .artists-section {
   padding: 5rem 0;
   background-color: white;
@@ -555,7 +555,7 @@ button {
     background-color: #e41169;
 }
 
-/* Footer */
+/* Rodapé. */
 .main-footer {
   padding: 2rem 0;
   text-align: center;
@@ -563,3 +563,36 @@ button {
   color: #6b7280;
   border-top: 1px solid #f5f5f5;
 }
+
+/* Estrutura base para as páginas que ainda receberão seus conteúdos específicos. */
+.pagina-conteudo { min-height: 60vh; padding-top: 3rem; padding-bottom: 3rem; }
+.pagina-conteudo section, .pagina-conteudo aside { margin-top: 2rem; }
+
+/* Componentes reutilizados pelo catálogo e pelo detalhe do produto. */
+.cabecalho-pagina { max-width: 720px; margin-bottom: 2rem; }
+.rotulo-pagina { color: #ac359c; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.cabecalho-pagina h1, .produto-detalhe h1 { margin: 0.5rem 0; }
+.formulario-filtros { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; align-items: end; margin-bottom: 2rem; padding: 1.25rem; border: 1px solid #f5f5f5; }
+.campo-filtro { display: grid; gap: 0.4rem; font-size: 0.8rem; font-weight: 600; }
+.campo-busca { grid-column: span 2; }
+.campo-filtro input, .campo-filtro select { min-height: 2.5rem; padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px; font: inherit; }
+.formulario-filtros .btn-primary { justify-content: center; background: #fff; }
+.mensagem-aviso { margin: 2rem 0; padding: 1rem; background: #f8f7f5; color: #4b5563; }
+.produtos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; }
+.produto-card { border: 1px solid #f1f1f1; background: #fff; }
+.produto-link { display: block; height: 100%; }
+.produto-imagem, .produto-detalhe-imagem { display: flex; align-items: center; justify-content: center; min-height: 220px; background: #f8f7f5; color: #6b7280; }
+.produto-imagem img, .produto-detalhe-imagem img { width: 100%; height: 100%; object-fit: cover; }
+.produto-informacoes { padding: 1rem; }
+.produto-informacoes h2 { font-size: 1.1rem; }
+.produto-artista, .produto-disponibilidade { margin-bottom: 0.4rem; font-size: 0.8rem; }
+.produto-preco { margin: 0.75rem 0; color: #ac359c; font-size: 1.1rem; font-weight: 700; }
+.em-estoque { color: #15803d; }
+.esgotado { color: #b91c1c; }
+.produto-detalhe { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; }
+.produto-detalhe-imagem { min-height: 420px; }
+.produto-detalhe-conteudo { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.produto-especificacoes { width: 100%; margin: 1.5rem 0; border-top: 1px solid #e5e7eb; }
+.produto-especificacoes div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid #e5e7eb; }
+.produto-especificacoes dt { font-weight: 700; }
+@media (max-width: 700px) { .campo-busca { grid-column: auto; } .produto-detalhe { grid-template-columns: 1fr; gap: 1.5rem; } .produto-detalhe-imagem { min-height: 300px; } }.mensagem-sucesso,.mensagem-erro{padding:1rem;margin:1rem 0}.mensagem-sucesso{background:#dcfce7;color:#166534}.mensagem-erro{background:#fee2e2;color:#991b1b}.duas-colunas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem}.card-form{display:grid;gap:.85rem;padding:1.25rem;border:1px solid #e5e7eb;margin:1rem 0}.card-form label{display:grid;gap:.35rem}.card-form input,.card-form select,.card-form textarea,.grid-form input{padding:.65rem;border:1px solid #d1d5db;font:inherit}.linha-item{display:flex;align-items:center;gap:1rem;padding:1rem;border-bottom:1px solid #e5e7eb}.linha-item>div{flex:1}.avaliacao{padding:1rem 0;border-bottom:1px solid #eee}.grid-form{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}@media(max-width:700px){.duas-colunas{grid-template-columns:1fr}.linha-item{flex-wrap:wrap}}
