@@ -1,5 +1,4 @@
-﻿﻿<?php
-require_once 'conexao.php';
+﻿<?php
 
 // Função auxiliar para proteger nomes de tabelas e colunas
 function sanitizeIdentifier($identifier) {

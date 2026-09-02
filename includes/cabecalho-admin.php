@@ -1,1 +1,27 @@
-<?php require_once __DIR__.'/../config/app.php'; exigirAdministrador(); $tituloPaginaAdmin=$tituloPaginaAdmin??'Painel administrativo'; ?><!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title><?=escapar($tituloPaginaAdmin)?> | MagicMerch</title><link rel="stylesheet" href="../assets/css/admin.css"></head><body class="pagina-admin"><header class="cabecalho-admin"><a href="index.php">MagicMerch</a><span>Painel administrativo</span><a href="../login.php?sair=1">Sair</a></header><nav class="navegacao-admin"><a href="index.php">Visão geral</a><a href="produtos.php">Produtos</a><a href="estoque.php">Estoque</a><a href="pedidos.php">Pedidos</a><a href="relatorios.php">Relatórios</a></nav><main class="conteudo-admin">
+<?php
+require_once __DIR__ . '/../config/app.php';
+exigirAdministrador();
+$tituloPaginaAdmin = $tituloPaginaAdmin ?? 'Painel administrativo';
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title><?= escapar($tituloPaginaAdmin) ?> | MagicMerch</title>
+    <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body class="pagina-admin">
+    <header class="cabecalho-admin">
+        <a href="index.php">MagicMerch</a>
+        <span>Painel administrativo</span>
+        <a href="../login.php?sair=1">Sair</a>
+    </header>
+    <nav class="navegacao-admin">
+        <a href="index.php">Visão geral</a>
+        <a href="produtos.php">Produtos</a>
+        <a href="estoque.php">Estoque</a>
+        <a href="pedidos.php">Pedidos</a>
+        <a href="relatorios.php">Relatórios</a>
+    </nav>
+    <main class="conteudo-admin">

@@ -1,14 +1,32 @@
-<?php $tituloPagina = 'Artistas e bandas';
+<?php
+$tituloPagina = 'Artistas e bandas';
 $paginaNavegacaoAtiva = 'Artistas e bandas';
 require 'includes/header.php';
-$db = criarConexaoBancoDados();
-$arts = $db->query('SELECT a.*,COUNT(p.id) total FROM artistas a LEFT JOIN produtos p ON p.artista_id=a.id GROUP BY a.id ORDER BY a.nome')->fetchAll(); ?>
-<main class="container pagina-conteudo">
-    <h1>Artistas e bandas</h1>
-    <section class="produtos-grid"><?php foreach ($arts as $a): ?><a class="produto-card produto-informacoes"
-                href="produtos.php?artista=<?= $a['id'] ?>">
-                <h2><?= escapar($a['nome']) ?></h2>
-                <p><?= escapar($a['descricao']) ?></p>
-                <p><?= $a['total'] ?> produtos</p>
-            </a><?php endforeach; ?></section>
-</main><?php require 'includes/footer.php'; ?>
+require_once 'includes/poster.php';
+
+$produtos = $pdo ? readAll($pdo, 'produtos') : [];
+$arts = $pdo ? readAll($pdo, 'artistas', '1 ORDER BY nome') : [];
+foreach ($arts as &$a) {
+    $a['total'] = count(array_filter($produtos, fn($p) => $p['artista_id'] == $a['id']));
+}
+unset($a);
+?>
+<main class="container pagina">
+    <header class="cabecalho-pagina">
+        <h1>Artistas e bandas</h1>
+        <p>O MagicMerch é organizado em torno de quem você acompanha. Escolha um artista e veja tudo dele.</p>
+    </header>
+
+    <?php if (!$arts): ?>
+        <div class="vazio">
+            <span class="vazio__inicial" aria-hidden="true">♪</span>
+            <h2>Nenhum artista cadastrado</h2>
+            <p>Assim que houver artistas no catálogo, eles aparecem aqui.</p>
+        </div>
+    <?php else: ?>
+        <div class="grade grade--artistas">
+            <?php foreach ($arts as $a): ?><?= posterArtista($a) ?><?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</main>
+<?php require 'includes/footer.php'; ?>
