@@ -1,3 +1,26 @@
-/docs/guia-funcoes.md
+# Ferramentas de agente / assistentes (não fazem parte do projeto)
+.agents/
+.claude/
+.codex/
+.impeccable/
+skills-lock.json
 
-docs/guia-funcoes.md
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores / IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs e temporários
+*.log
+*.tmp
+*.bak
+~$*
+
+# Configuração local sensível (se algum dia existir)
+config/local.php
