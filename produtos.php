@@ -13,18 +13,9 @@ $filtros = [
     'disponibilidade' => $_GET['disponibilidade'] ?? '',
     'ordenacao' => $_GET['ordenacao'] ?? 'destaque',
 ];
-$produtos = [];
-$artistas = [];
-$categorias = [];
-$mensagemBancoDados = '';
-
-if ($pdo === null) {
-    $mensagemBancoDados = 'O catálogo ficará disponível depois da importação do banco de dados indicado no README.';
-} else {
-    $produtos = buscarProdutos($pdo, $filtros);
-    $artistas = buscarArtistas($pdo);
-    $categorias = buscarCategorias($pdo);
-}
+$produtos = buscarProdutos($pdo, $filtros);
+$artistas = buscarArtistas($pdo);
+$categorias = buscarCategorias($pdo);
 ?>
 <main class="container pagina">
     <header class="cabecalho-pagina">
@@ -91,9 +82,7 @@ if ($pdo === null) {
         </form>
     </details>
 
-    <?php if ($mensagemBancoDados): ?>
-        <p class="msg msg--aviso"><?= escapar($mensagemBancoDados) ?></p>
-    <?php elseif (!$produtos): ?>
+    <?php if (!$produtos): ?>
         <div class="vazio">
             <span class="vazio__inicial" aria-hidden="true">?</span>
             <h2>Nada por aqui</h2>

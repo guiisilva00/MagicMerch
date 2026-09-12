@@ -3,11 +3,7 @@ require_once __DIR__ . '/../config/app.php';
 require_once __DIR__ . '/icones.php';
 $tituloPagina = $tituloPagina ?? 'MagicMerch';
 $paginaNavegacaoAtiva = $paginaNavegacaoAtiva ?? 'Início';
-try {
-    $quantidadeItensCarrinho = ($pdo && estaLogado()) ? quantidadeCarrinho($pdo, (int) usuarioAtual()['id']) : 0;
-} catch (Throwable $e) {
-    $quantidadeItensCarrinho = 0;
-}
+$quantidadeItensCarrinho = estaLogado() ? quantidadeCarrinho($pdo, (int) usuarioAtual()['id']) : 0;
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

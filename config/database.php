@@ -1,24 +1,15 @@
 <?php
-/**
- * Configuração da conexão MySQL usada durante o desenvolvimento local com XAMPP.
- * Altere estes dados somente se a sua instalação local usar credenciais diferentes.
- */
-const SERVIDOR_BANCO_DADOS = 'localhost';
-const NOME_BANCO_DADOS = 'magicmerch_db';
-const USUARIO_BANCO_DADOS = 'root';
-const SENHA_BANCO_DADOS = '';
+declare(strict_types=1);
 
-/**
- * Abre a conexão PDO com o banco de dados da aplicação.
- *
- * @throws PDOException Quando o MySQL não está disponível ou o banco ainda não foi importado.
- */
-function criarConexaoBancoDados(): PDO
-{
-    $fonteDados = 'mysql:host=' . SERVIDOR_BANCO_DADOS . ';dbname=' . NOME_BANCO_DADOS . ';charset=utf8mb4';
+$host = 'localhost';
+$dbname = 'magicmerch_db';
+$usuario = 'root';
+$senha = '';
 
-    return new PDO($fonteDados, USUARIO_BANCO_DADOS, SENHA_BANCO_DADOS, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $usuario, $senha);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die('Erro de conexão com o banco de dados: ' . $e->getMessage());
 }

@@ -9,38 +9,34 @@ if (isset($_GET['sair'])) {
 }
 $erro = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($pdo === null) {
-        $erro = 'Não foi possível concluir a operação. Verifique a importação do banco.';
-    } else {
-        if ($_POST['acao'] === 'entrar') {
-            $u = read($pdo, 'usuarios', 'email = ?', [trim($_POST['email'])]);
-            if ($u && password_verify($_POST['senha'], $u['senha'])) {
-                session_regenerate_id(true);
-                $_SESSION['usuario'] = ['id' => $u['id'], 'nome' => $u['nome'], 'email' => $u['email'], 'tipo' => $u['tipo']];
-                redirecionar($u['tipo'] === 'administrador' ? 'admin/index.php' : ($_SESSION['retorno'] ?? 'perfil.php'));
-            }
-            $erro = 'E-mail ou senha inválidos.';
-        } elseif ($_POST['acao'] === 'cadastrar') {
-            $nome = trim($_POST['nome']);
-            $email = trim($_POST['email']);
-            if ($nome === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($_POST['senha']) < 8)
-                $erro = 'Informe nome, e-mail válido e senha com ao menos 8 caracteres.';
-            elseif (read($pdo, 'usuarios', 'email = ?', [$email]))
-                $erro = 'Este e-mail já possui cadastro.';
-            else {
-                create($pdo, 'usuarios', [
-                    'nome' => $nome,
-                    'email' => $email,
-                    'senha' => password_hash($_POST['senha'], PASSWORD_BCRYPT),
-                    'telefone' => trim($_POST['telefone']),
-                ]);
-                definirFlash('sucesso', 'Cadastro realizado. Faça seu login.');
-                redirecionar('login.php');
-            }
-        } else {
-            definirFlash('sucesso', 'Se o e-mail estiver cadastrado, as instruções de recuperação foram simuladas nesta tela.');
+    if ($_POST['acao'] === 'entrar') {
+        $u = read($pdo, 'usuarios', 'email = ?', [trim($_POST['email'])]);
+        if ($u && password_verify($_POST['senha'], $u['senha'])) {
+            session_regenerate_id(true);
+            $_SESSION['usuario'] = ['id' => $u['id'], 'nome' => $u['nome'], 'email' => $u['email'], 'tipo' => $u['tipo']];
+            redirecionar($u['tipo'] === 'administrador' ? 'admin/index.php' : ($_SESSION['retorno'] ?? 'perfil.php'));
+        }
+        $erro = 'E-mail ou senha inválidos.';
+    } elseif ($_POST['acao'] === 'cadastrar') {
+        $nome = trim($_POST['nome']);
+        $email = trim($_POST['email']);
+        if ($nome === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($_POST['senha']) < 8)
+            $erro = 'Informe nome, e-mail válido e senha com ao menos 8 caracteres.';
+        elseif (read($pdo, 'usuarios', 'email = ?', [$email]))
+            $erro = 'Este e-mail já possui cadastro.';
+        else {
+            create($pdo, 'usuarios', [
+                'nome' => $nome,
+                'email' => $email,
+                'senha' => password_hash($_POST['senha'], PASSWORD_BCRYPT),
+                'telefone' => trim($_POST['telefone']),
+            ]);
+            definirFlash('sucesso', 'Cadastro realizado. Faça seu login.');
             redirecionar('login.php');
         }
+    } else {
+        definirFlash('sucesso', 'Se o e-mail estiver cadastrado, as instruções de recuperação foram simuladas nesta tela.');
+        redirecionar('login.php');
     }
 }
 $tituloPagina = 'Acesso';

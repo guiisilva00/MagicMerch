@@ -3,17 +3,13 @@ require_once __DIR__ . '/../config/app.php';
 
 $erro = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($pdo === null) {
-        $erro = 'Banco de dados indisponível.';
-    } else {
-        $u = read($pdo, 'usuarios', 'email = ? AND tipo = ?', [trim($_POST['email']), 'administrador']);
-        if ($u && password_verify($_POST['senha'], $u['senha'])) {
-            session_regenerate_id(true);
-            $_SESSION['usuario'] = ['id' => $u['id'], 'nome' => $u['nome'], 'email' => $u['email'], 'tipo' => $u['tipo']];
-            redirecionar('index.php');
-        }
-        $erro = 'Credenciais administrativas inválidas.';
+    $u = read($pdo, 'usuarios', 'email = ? AND tipo = ?', [trim($_POST['email']), 'administrador']);
+    if ($u && password_verify($_POST['senha'], $u['senha'])) {
+        session_regenerate_id(true);
+        $_SESSION['usuario'] = ['id' => $u['id'], 'nome' => $u['nome'], 'email' => $u['email'], 'tipo' => $u['tipo']];
+        redirecionar('index.php');
     }
+    $erro = 'Credenciais administrativas inválidas.';
 }
 ?>
 <!DOCTYPE html>

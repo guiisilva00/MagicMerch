@@ -237,9 +237,9 @@ MagicMerch/
 
 15. **`config/database.php`**
     * **Localização:** `/config/database.php`
-    * **Finalidade:** Função de conexão com o banco de dados via PDO.
+    * **Finalidade:** Conexão direta com o banco de dados via PDO (instancia $pdo ou encerra a execução com die() em erro).
     * **Estado:** **Implementado**
-    * **Conteúdo:** Função `criarConexaoBancoDados()` configurando o DSN (`mysql:host=localhost;dbname=magicmerch_db;charset=utf8mb4`), usuário `root` e senha vazia.
+    * **Conteúdo:** Instanciação direta do PDO com DSN (`mysql:host=localhost;dbname=magicmerch_db;charset=utf8mb4`), usuário `root` e senha vazia, configurado com `ERRMODE_EXCEPTION` e `FETCH_ASSOC`.
     * **Dependências:** Nenhuma.
 
 16. **`config/crud.php`**
@@ -251,11 +251,11 @@ MagicMerch/
 
 17. **`config/app.php`**
     * **Localização:** `/config/app.php`
-    * **Finalidade:** Bootstrap da aplicação, inicialização de sessão, declaração da variável global `$pdo`, helpers de autenticação/navegação/formatos e funções de consulta de domínio.
+    * **Finalidade:** Bootstrap da aplicação, inicialização de sessão, inclusão da variável global `$pdo`, helpers de autenticação/navegação/formatos e funções de consulta de domínio.
     * **Estado:** **Implementado**
     * **Conteúdo:**
       * Inicialização de `session_start()`.
-      * Conexão com `$pdo` (com tratamento para `null` caso o BD não esteja configurado).
+      * Inclusão do `$pdo` já conectado via `require_once 'database.php'`.
       * Helpers gerais (`escapar`, `usuarioAtual`, `estaLogado`, `eAdministrador`, `redirecionar`, `exigirLogin`, `exigirAdministrador`, `definirFlash`, `lerFlash`, `valorMoeda`).
       * Helpers visuais de pôster (`acentoPoster`, `inicial`).
       * Consultas reutilizáveis de domínio sobre o CRUD (`indexarPorId`, `quantidadeCarrinho`, `itensCarrinho`, `subtotalCarrinho`, `buscarArtistas`, `buscarCategorias`, `buscarProdutoPorId`, `buscarProdutos`).

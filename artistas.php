@@ -4,8 +4,8 @@ $paginaNavegacaoAtiva = 'Artistas e bandas';
 require 'includes/header.php';
 require_once 'includes/poster.php';
 
-$produtos = $pdo ? readAll($pdo, 'produtos') : [];
-$arts = $pdo ? readAll($pdo, 'artistas', '1 ORDER BY nome') : [];
+$produtos = readAll($pdo, 'produtos');
+$arts = readAll($pdo, 'artistas', '1 ORDER BY nome');
 foreach ($arts as &$a) {
     $total = 0;
     foreach ($produtos as $p) {

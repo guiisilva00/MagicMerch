@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/config/app.php';
 $id = (int) ($_GET['id'] ?? 0);
-$produto = $pdo ? buscarProdutoPorId($pdo, $id) : null;
+$produto = buscarProdutoPorId($pdo, $id);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exigirLogin();
     $uid = (int) usuarioAtual()['id'];

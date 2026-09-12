@@ -7,39 +7,37 @@ require_once 'includes/poster.php';
 // Artistas com contagem de produtos e produtos em destaque — tudo via CRUD.
 $artistasDestaque = [];
 $destaques = [];
-if ($pdo) {
-    $produtos = readAll($pdo, 'produtos');
-    $artistasPorId = indexarPorId(readAll($pdo, 'artistas'));
+$produtos = readAll($pdo, 'produtos');
+$artistasPorId = indexarPorId(readAll($pdo, 'artistas'));
 
-    foreach ($artistasPorId as $a) {
-        $total = 0;
-        foreach ($produtos as $p) {
-            if ($p['artista_id'] == $a['id']) {
-                $total++;
-            }
-        }
-        $a['total'] = $total;
-        $artistasDestaque[] = $a;
-    }
-    usort($artistasDestaque, function($x, $y) {
-        return strcmp($x['nome'], $y['nome']);
-    });
-
-    $destaques = [];
+foreach ($artistasPorId as $a) {
+    $total = 0;
     foreach ($produtos as $p) {
-        if ((int) $p['destaque'] === 1) {
-            $destaques[] = $p;
+        if ($p['artista_id'] == $a['id']) {
+            $total++;
         }
     }
-    usort($destaques, function($x, $y) {
-        return (int) $y['vendas'] - (int) $x['vendas'];
-    });
-    $destaques = array_slice($destaques, 0, 4);
-    foreach ($destaques as &$d) {
-        $d['nome_artista'] = $artistasPorId[$d['artista_id']]['nome'] ?? '';
-    }
-    unset($d);
+    $a['total'] = $total;
+    $artistasDestaque[] = $a;
 }
+usort($artistasDestaque, function($x, $y) {
+    return strcmp($x['nome'], $y['nome']);
+});
+
+$destaques = [];
+foreach ($produtos as $p) {
+    if ((int) $p['destaque'] === 1) {
+        $destaques[] = $p;
+    }
+}
+usort($destaques, function($x, $y) {
+    return (int) $y['vendas'] - (int) $x['vendas'];
+});
+$destaques = array_slice($destaques, 0, 4);
+foreach ($destaques as &$d) {
+    $d['nome_artista'] = $artistasPorId[$d['artista_id']]['nome'] ?? '';
+}
+unset($d);
 ?>
 <main>
     <?php require 'includes/components/hero-banner.php'; ?>

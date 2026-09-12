@@ -8,13 +8,6 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-// Conexão única da requisição. Fica null quando o banco não foi importado.
-try {
-    $pdo = criarConexaoBancoDados();
-} catch (PDOException $e) {
-    $pdo = null;
-}
-
 // ----------------------------------------------------------------------------
 // Helpers gerais
 // ----------------------------------------------------------------------------
