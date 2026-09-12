@@ -56,7 +56,7 @@ try {
         </div>
     </header>
 
-    <?php if ($flash = mensagemFlash()): ?>
+    <?php if ($flash = lerFlash()): ?>
         <div class="container">
             <p class="msg msg--<?= $flash[0] === 'erro' ? 'erro' : 'sucesso' ?>"><?= escapar((string) $flash[1]) ?></p>
         </div>

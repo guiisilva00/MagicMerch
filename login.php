@@ -4,7 +4,7 @@ if (isset($_GET['sair'])) {
     session_unset();
     session_destroy();
     session_start();
-    mensagemFlash('sucesso', 'Sessão encerrada.');
+    definirFlash('sucesso', 'Sessão encerrada.');
     redirecionar('login.php');
 }
 $erro = '';
@@ -34,11 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'senha' => password_hash($_POST['senha'], PASSWORD_BCRYPT),
                     'telefone' => trim($_POST['telefone']),
                 ]);
-                mensagemFlash('sucesso', 'Cadastro realizado. Faça seu login.');
+                definirFlash('sucesso', 'Cadastro realizado. Faça seu login.');
                 redirecionar('login.php');
             }
         } else {
-            mensagemFlash('sucesso', 'Se o e-mail estiver cadastrado, as instruções de recuperação foram simuladas nesta tela.');
+            definirFlash('sucesso', 'Se o e-mail estiver cadastrado, as instruções de recuperação foram simuladas nesta tela.');
             redirecionar('login.php');
         }
     }

@@ -102,7 +102,7 @@ if ($pdo === null) {
         </div>
     <?php else: ?>
         <div class="grade" aria-label="Produtos encontrados">
-            <?php foreach ($produtos as $produto): ?><?= posterProduto($produto) ?><?php endforeach; ?>
+            <?php foreach ($produtos as $produto): ?><?php posterProduto($produto); ?><?php endforeach; ?>
         </div>
     <?php endif; ?>
 </main>

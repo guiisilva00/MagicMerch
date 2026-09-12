@@ -33,7 +33,7 @@ Sessão / usuário: `usuarioAtual()`, `estaLogado()`, `eAdministrador()`, `exigi
 `exigirAdministrador()`.
 
 Saída / navegação: `escapar($valor)` (htmlspecialchars), `redirecionar($url)`,
-`mensagemFlash($tipo?, $texto?)`, `valorMoeda($valor)`.
+`definirFlash($tipo, $texto)`, `lerFlash()`, `valorMoeda($valor)`.
 
 Consultas prontas (atalhos finos sobre o CRUD):
 - `indexarPorId(array $linhas): array` — devolve `id => linha`.

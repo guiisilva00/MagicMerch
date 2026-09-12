@@ -7,8 +7,14 @@ $fim = $_GET['fim'] ?? date('Y-m-d');
 
 // Pedidos do período (filtro simples na string $where; agregação feita em PHP).
 $pedidos = readAll($pdo, 'pedidos', 'DATE(data_pedido) BETWEEN ? AND ?', [$ini, $fim]);
-$faturamento = array_sum(array_column($pedidos, 'valor_total'));
-$confirmados = array_sum(array_column($pedidos, 'pagamento_confirmado'));
+$faturamento = 0.0;
+$confirmados = 0;
+foreach ($pedidos as $p) {
+    $faturamento += (float) $p['valor_total'];
+    if ((int) $p['pagamento_confirmado'] === 1) {
+        $confirmados++;
+    }
+}
 
 // Mais vendidos: soma das quantidades por produto entre os pedidos do período.
 $pedidosPorId = indexarPorId($pedidos);

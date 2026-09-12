@@ -22,21 +22,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($_POST['acao'] === 'excluir') {
         delete($pdo, 'enderecos', 'id = ? AND usuario_id = ?', [(int) $_POST['id'], $uid]);
     }
-    mensagemFlash('sucesso', 'Dados atualizados.');
+    definirFlash('sucesso', 'Dados atualizados.');
     redirecionar('perfil.php');
 }
 $u = read($pdo, 'usuarios', 'id = ?', [$uid]);
 $ends = readAll($pdo, 'enderecos', 'usuario_id = ?', [$uid]);
 $pedidos = readAll($pdo, 'pedidos', 'usuario_id = ? ORDER BY data_pedido DESC', [$uid]);
 
-// Itens comprados = soma das quantidades dos pedidos já pagos (join resolvido em PHP).
-$pedidosPagos = array_column(array_filter($pedidos, fn($p) => $p['status'] !== 'aguardando_pagamento'), null, 'id');
+// Itens comprados = soma das quantidades dos pedidos já pagos (join resolvido em PHP com foreach).
+$pedidosPagos = [];
+foreach ($pedidos as $p) {
+    if ($p['status'] !== 'aguardando_pagamento') {
+        $pedidosPagos[$p['id']] = $p;
+    }
+}
 $comprados = 0;
 foreach (readAll($pdo, 'itens_pedido') as $item) {
     if (isset($pedidosPagos[$item['pedido_id']])) {
         $comprados += (int) $item['quantidade'];
     }
 }
+// Regra de Fidelidade: 1 brinde a cada 10 itens comprados acumulados
 $tituloPagina = 'Minha conta';
 $faltam = $comprados === 0 ? 10 : (10 - $comprados % 10) % 10;
 $progresso = $comprados === 0 ? 0 : ($comprados % 10 ?: 10) * 10;

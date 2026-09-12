@@ -11,12 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             create($pdo, 'carrinho', ['usuario_id' => $uid, 'produto_id' => $id, 'quantidade' => 1]);
         }
-        mensagemFlash('sucesso', 'Produto adicionado ao carrinho.');
+        definirFlash('sucesso', 'Produto adicionado ao carrinho.');
     } elseif (isset($_POST['favorito'])) {
         if (!read($pdo, 'favoritos', 'usuario_id = ? AND produto_id = ?', [$uid, $id])) {
             create($pdo, 'favoritos', ['usuario_id' => $uid, 'produto_id' => $id]);
         }
-        mensagemFlash('sucesso', 'Produto salvo nos favoritos.');
+        definirFlash('sucesso', 'Produto salvo nos favoritos.');
     } else {
         $dados = ['nota' => (int) $_POST['nota'], 'comentario' => trim($_POST['comentario'])];
         if (read($pdo, 'avaliacoes', 'usuario_id = ? AND produto_id = ?', [$uid, $id])) {
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             create($pdo, 'avaliacoes', $dados + ['usuario_id' => $uid, 'produto_id' => $id]);
         }
-        mensagemFlash('sucesso', 'Avaliação publicada.');
+        definirFlash('sucesso', 'Avaliação publicada.');
     }
     redirecionar('produto.php?id=' . $id);
 }
@@ -38,8 +38,12 @@ if ($produto) {
     }
 }
 $tituloPagina = $produto ? $produto['nome'] : 'Produto';
-$mediaNota = $avaliacoes ? round(array_sum(array_column($avaliacoes, 'nota')) / count($avaliacoes), 1) : null;
-$corProduto = $produto ? acentoPoster($produto['categoria'] ?? $produto['nome']) : 1;
+$somaNotas = 0;
+foreach ($avaliacoes as $av) {
+    $somaNotas += (int) $av['nota'];
+}
+$mediaNota = $avaliacoes ? round($somaNotas / count($avaliacoes), 1) : null;
+$corProduto = $produto ? acentoPoster((int) $produto['id']) : 1;
 require 'includes/header.php'; ?>
 <main class="container pagina">
     <?php if (!$produto): ?>

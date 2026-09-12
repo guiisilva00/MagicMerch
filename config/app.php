@@ -25,11 +25,12 @@ function eAdministrador(): bool { return estaLogado() && usuarioAtual()['tipo'] 
 function redirecionar(string $url): never { header('Location: ' . $url); exit; }
 function exigirLogin(string $destino = 'login.php'): void { if (!estaLogado()) { $_SESSION['retorno'] = basename($_SERVER['PHP_SELF']); redirecionar($destino); } }
 function exigirAdministrador(): void { if (!eAdministrador()) { redirecionar('login.php'); } }
-function mensagemFlash(?string $tipo = null, ?string $texto = null): ?array { if ($tipo !== null) { $_SESSION['flash'] = [$tipo, $texto]; return null; } $m = $_SESSION['flash'] ?? null; unset($_SESSION['flash']); return $m; }
+function definirFlash(string $tipo, string $texto): void { $_SESSION['flash'] = [$tipo, $texto]; }
+function lerFlash(): ?array { $m = $_SESSION['flash'] ?? null; unset($_SESSION['flash']); return $m; }
 function valorMoeda(float $valor): string { return 'R$ ' . number_format($valor, 2, ',', '.'); }
 
-// Cor do pôster (1..5) derivada de um texto estável (nome do artista, categoria...).
-function acentoPoster(string $chave): int { return (int) (crc32($chave) % 5) + 1; }
+// Cor do pôster (1..5) derivada do ID do produto ou artista.
+function acentoPoster(int $id): int { return ($id % 5) + 1; }
 
 // Primeira letra visível de um nome, em maiúscula, para a inicial-fantasma dos pôsteres.
 function inicial(string $nome): string { return mb_strtoupper(mb_substr(trim($nome), 0, 1)); }
@@ -51,7 +52,11 @@ function indexarPorId(array $linhas): array
 function quantidadeCarrinho(PDO $pdo, int $usuarioId): int
 {
     $itens = readAll($pdo, 'carrinho', 'usuario_id = ?', [$usuarioId]);
-    return (int) array_sum(array_column($itens, 'quantidade'));
+    $total = 0;
+    foreach ($itens as $item) {
+        $total += (int) $item['quantidade'];
+    }
+    return $total;
 }
 
 function itensCarrinho(PDO $pdo, int $usuarioId): array
@@ -79,7 +84,11 @@ function itensCarrinho(PDO $pdo, int $usuarioId): array
 
 function subtotalCarrinho(array $itens): float
 {
-    return array_sum(array_map(fn($i) => (float) $i['preco'] * (int) $i['quantidade'], $itens));
+    $subtotal = 0.0;
+    foreach ($itens as $item) {
+        $subtotal += (float) $item['preco'] * (int) $item['quantidade'];
+    }
+    return $subtotal;
 }
 
 function buscarArtistas(PDO $pdo): array
@@ -90,7 +99,13 @@ function buscarArtistas(PDO $pdo): array
 // Categorias distintas derivadas dos produtos (não há tabela própria).
 function buscarCategorias(PDO $pdo): array
 {
-    $categorias = array_values(array_unique(array_column(readAll($pdo, 'produtos'), 'categoria')));
+    $produtos = readAll($pdo, 'produtos');
+    $categorias = [];
+    foreach ($produtos as $p) {
+        if (!empty($p['categoria']) && !in_array($p['categoria'], $categorias, true)) {
+            $categorias[] = $p['categoria'];
+        }
+    }
     sort($categorias);
     return $categorias;
 }
@@ -138,12 +153,15 @@ function buscarProdutos(PDO $pdo, array $filtros): array
         $condicoes[] = 'estoque = 0';
     }
 
-    $ordenacao = match ($filtros['ordenacao']) {
-        'menor_preco' => 'preco ASC',
-        'maior_preco' => 'preco DESC',
-        'alfabetica' => 'nome ASC',
-        default => 'destaque DESC, vendas DESC',
-    };
+    if ($filtros['ordenacao'] === 'menor_preco') {
+        $ordenacao = 'preco ASC';
+    } elseif ($filtros['ordenacao'] === 'maior_preco') {
+        $ordenacao = 'preco DESC';
+    } elseif ($filtros['ordenacao'] === 'alfabetica') {
+        $ordenacao = 'nome ASC';
+    } else {
+        $ordenacao = 'destaque DESC, vendas DESC';
+    }
 
     $where = ($condicoes ? implode(' AND ', $condicoes) : '1') . ' ORDER BY ' . $ordenacao;
     $produtos = readAll($pdo, 'produtos', $where, $parametros);

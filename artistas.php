@@ -7,7 +7,13 @@ require_once 'includes/poster.php';
 $produtos = $pdo ? readAll($pdo, 'produtos') : [];
 $arts = $pdo ? readAll($pdo, 'artistas', '1 ORDER BY nome') : [];
 foreach ($arts as &$a) {
-    $a['total'] = count(array_filter($produtos, fn($p) => $p['artista_id'] == $a['id']));
+    $total = 0;
+    foreach ($produtos as $p) {
+        if ($p['artista_id'] == $a['id']) {
+            $total++;
+        }
+    }
+    $a['total'] = $total;
 }
 unset($a);
 ?>
@@ -25,7 +31,7 @@ unset($a);
         </div>
     <?php else: ?>
         <div class="grade grade--artistas">
-            <?php foreach ($arts as $a): ?><?= posterArtista($a) ?><?php endforeach; ?>
+            <?php foreach ($arts as $a): ?><?php posterArtista($a); ?><?php endforeach; ?>
         </div>
     <?php endif; ?>
 </main>

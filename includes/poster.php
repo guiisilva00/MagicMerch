@@ -5,11 +5,11 @@ require_once __DIR__ . '/icones.php';
  * Pôster de produto — usado no catálogo, na Home e nos relacionados.
  * $p precisa de: id, nome, preco, estoque, categoria, nome_artista.
  */
-function posterProduto(array $p): string
+function posterProduto(array $p): void
 {
-    $cor = acentoPoster($p['categoria'] ?? $p['nome']);
+    $cor = acentoPoster((int) $p['id']);
     $esgotado = (int) $p['estoque'] <= 0;
-    ob_start(); ?>
+    ?>
     <a class="poster poster--c<?= $cor ?>" href="produto.php?id=<?= (int) $p['id'] ?>">
         <div class="poster__campo">
             <span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($p['nome_artista'] ?: $p['nome'])) ?></span>
@@ -25,17 +25,16 @@ function posterProduto(array $p): string
         </div>
     </a>
     <?php
-    return ob_get_clean();
 }
 
 /**
  * Pôster de artista — usado na Home e na página de artistas.
  * $a precisa de: id, nome, descricao, total.
  */
-function posterArtista(array $a): string
+function posterArtista(array $a): void
 {
-    $cor = acentoPoster($a['nome']);
-    ob_start(); ?>
+    $cor = acentoPoster((int) $a['id']);
+    ?>
     <a class="poster poster--artista poster--c<?= $cor ?>" href="produtos.php?artista=<?= (int) $a['id'] ?>">
         <div class="poster__campo">
             <span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($a['nome'])) ?></span>
@@ -47,5 +46,4 @@ function posterArtista(array $a): string
         </div>
     </a>
     <?php
-    return ob_get_clean();
 }

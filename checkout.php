@@ -3,7 +3,7 @@ exigirLogin();
 $uid = (int) usuarioAtual()['id'];
 $itens = itensCarrinho($pdo, $uid);
 if (!$itens) {
-    mensagemFlash('erro', 'Seu carrinho está vazio.');
+    definirFlash('erro', 'Seu carrinho está vazio.');
     redirecionar('carrinho.php');
 }
 $enderecos = readAll($pdo, 'enderecos', 'usuario_id = ? ORDER BY principal DESC', [$uid]);
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ], 'id = ?', [$i['produto_id']]);
         }
         delete($pdo, 'carrinho', 'usuario_id = ?', [$uid]);
-        mensagemFlash('sucesso', 'Pedido #' . $pedido . ' confirmado com pagamento simulado.');
+        definirFlash('sucesso', 'Pedido #' . $pedido . ' confirmado com pagamento simulado.');
         redirecionar('perfil.php');
     }
 }

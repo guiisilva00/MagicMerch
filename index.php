@@ -12,13 +12,28 @@ if ($pdo) {
     $artistasPorId = indexarPorId(readAll($pdo, 'artistas'));
 
     foreach ($artistasPorId as $a) {
-        $a['total'] = count(array_filter($produtos, fn($p) => $p['artista_id'] == $a['id']));
+        $total = 0;
+        foreach ($produtos as $p) {
+            if ($p['artista_id'] == $a['id']) {
+                $total++;
+            }
+        }
+        $a['total'] = $total;
         $artistasDestaque[] = $a;
     }
-    usort($artistasDestaque, fn($x, $y) => strcmp($x['nome'], $y['nome']));
+    usort($artistasDestaque, function($x, $y) {
+        return strcmp($x['nome'], $y['nome']);
+    });
 
-    $destaques = array_filter($produtos, fn($p) => (int) $p['destaque'] === 1);
-    usort($destaques, fn($x, $y) => (int) $y['vendas'] <=> (int) $x['vendas']);
+    $destaques = [];
+    foreach ($produtos as $p) {
+        if ((int) $p['destaque'] === 1) {
+            $destaques[] = $p;
+        }
+    }
+    usort($destaques, function($x, $y) {
+        return (int) $y['vendas'] - (int) $x['vendas'];
+    });
     $destaques = array_slice($destaques, 0, 4);
     foreach ($destaques as &$d) {
         $d['nome_artista'] = $artistasPorId[$d['artista_id']]['nome'] ?? '';
@@ -33,7 +48,7 @@ if ($pdo) {
         <section class="secao container pagina">
             <h2 class="secao-titulo">Em destaque</h2>
             <div class="grade">
-                <?php foreach ($destaques as $produto): ?><?= posterProduto($produto) ?><?php endforeach; ?>
+                <?php foreach ($destaques as $produto): ?><?php posterProduto($produto); ?><?php endforeach; ?>
             </div>
         </section>
     <?php endif; ?>
