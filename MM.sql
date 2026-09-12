@@ -14,6 +14,13 @@ CREATE TABLE
     );
 
 CREATE TABLE
+    respostas_suporte (
+        chamado_id INT PRIMARY KEY,
+        resposta TEXT NOT NULL,
+        data_resposta TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE
     usuarios (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(100) NOT NULL,
