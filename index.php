@@ -17,13 +17,13 @@ if ($pdo) {
     }
     usort($artistasDestaque, fn($x, $y) => strcmp($x['nome'], $y['nome']));
 
-    $destaques = array_filter($produtos, fn($p) => (int) $p['destaque'] === 1);
-    usort($destaques, fn($x, $y) => (int) $y['vendas'] <=> (int) $x['vendas']);
-    $destaques = array_slice($destaques, 0, 4);
-    foreach ($destaques as &$d) {
-        $d['nome_artista'] = $artistasPorId[$d['artista_id']]['nome'] ?? '';
-    }
-    unset($d);
+    // $destaques = array_filter($produtos, fn($p) => (int) $p['destaque'] === 1);
+    // usort($destaques, fn($x, $y) => (int) $y['vendas'] <=> (int) $x['vendas']);
+    // $destaques = array_slice($destaques, 0, 4);
+    // foreach ($destaques as &$d) {
+    //     $d['nome_artista'] = $artistasPorId[$d['artista_id']]['nome'] ?? '';
+    // }
+    // unset($d);
 }
 ?>
 <main>
