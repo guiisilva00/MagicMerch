@@ -9,7 +9,7 @@ function posterProduto(array $p): string
 {
     $cor = acentoPoster($p['categoria'] ?? $p['nome']);
     $esgotado = (int) $p['estoque'] <= 0;
-    $imgUrl = obterCaminhoImagem($p['imagem'] ?? null, 'produtos', $p['id'] ?? null);
+    $imgUrl = obterCaminhoImagem($p['imagem'] ?? null, 'produtos');
     $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : '');
     ob_start(); ?>
     <a class="poster poster--c<?= $cor ?>" href="produto.php?id=<?= (int) $p['id'] ?>">
@@ -44,7 +44,7 @@ function posterArtista(array $a): string
     $imgUrl = obterCaminhoImagem($a['imagem'] ?? null, 'artistas', $a['id'] ?? null);
     $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : '');
     ob_start(); ?>
-    <a class="poster poster--artista poster--c<?= $cor ?>" href="produtos.php?artista=<?= (int) $a['id'] ?>">
+    <a class="poster poster--artista poster--c<?= $cor ?>" href="artistas.php?artista=<?= (int) $a['id'] ?>">
         <div class="<?= $classeCampo ?>">
             <?php if ($imgUrl): ?>
                 <img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($a['nome']) ?>" class="poster__img">
