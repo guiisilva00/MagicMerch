@@ -11,4 +11,26 @@ CREATE TABLE pedidos (id INT AUTO_INCREMENT PRIMARY KEY,usuario_id INT NOT NULL,
 CREATE TABLE itens_pedido (id INT AUTO_INCREMENT PRIMARY KEY,pedido_id INT NOT NULL,produto_id INT NOT NULL,quantidade INT NOT NULL,preco_unitario DECIMAL(10,2) NOT NULL,FOREIGN KEY(pedido_id) REFERENCES pedidos(id),FOREIGN KEY(produto_id) REFERENCES produtos(id));
 INSERT INTO usuarios(nome,email,senha,telefone,tipo) VALUES ('Administração MagicMerch','admin@magicmerch.local','$2y$10$b606TIJfMqs3I4d.FHClDeyWWRZAeHiMVJEaBLLc25UK7fOEUyLGS','11999990000','administrador'),('João Silva','joao@email.com','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.','11999999999','cliente');
 INSERT INTO artistas(nome,descricao) VALUES ('The Beatles','Banda de rock clássica britânica'),('Taylor Swift','Cantora de pop americana'),('BTS','Grupo de música sul-coreano'),('Anime Classics','Personagens de anime populares');
-INSERT INTO produtos(nome,descricao,preco,artista_id,categoria,estoque,imagem,cor,tamanho,destaque) VALUES ('Camiseta The Beatles - Yellow Submarine','Camiseta de algodão com arte inspirada no álbum Yellow Submarine.',59.90,1,'camiseta',15,NULL,'Amarela','P, M, G',1),('Moletom The Beatles - Abbey Road','Moletom confortável com estampa inspirada no álbum Abbey Road.',89.90,1,'moletom',8,NULL,'Preto','P, M, G',1),('Caneca The Beatles - Logo Preto','Caneca de cerâmica para colecionadores.',29.90,1,'caneca',25,NULL,'Branca',NULL,0),('Camiseta Taylor Swift - Lover','Camiseta rosa com arte inspirada no álbum Lover.',49.90,2,'camiseta',12,NULL,'Rosa','P, M, G',1),('Pôster Taylor Swift - Red','Pôster colorido de 60 por 40 centímetros.',35.90,2,'poster',30,NULL,NULL,NULL,0),('Camiseta BTS - Dynamite','Camiseta preta com logo do BTS.',54.90,3,'camiseta',20,NULL,'Preta','P, M, G',1),('Boné BTS','Boné de algodão com aplicação frontal.',44.90,3,'acessorio',18,NULL,'Preto','Único',0),('Figura Naruto - Hokage','Miniatura do Naruto como Hokage.',39.90,4,'acessorio',10,NULL,NULL,NULL,0),('Pôster Demon Slayer','Pôster colorido de 50 por 70 centímetros.',32.90,4,'poster',22,NULL,NULL,NULL,0),('Moletom Anime Mix','Moletom com vários personagens de anime.',79.90,4,'moletom',0,NULL,'Cinza','P, M, G',0);
+INSERT INTO produtos
+(nome, descricao, preco, artista_id, categoria, estoque, imagem, cor, tamanho, destaque)
+VALUES
+('Camiseta The Beatles - Yellow Submarine', 'Camiseta de algodão com arte inspirada no álbum Yellow Submarine.', 59.90, 1, 'camiseta', 15, NULL, 'Amarela', 'P, M, G', 1),
+('Moletom The Beatles - Abbey Road', 'Moletom confortável com estampa inspirada no álbum Abbey Road.', 89.90, 1, 'moletom', 8, NULL, 'Preto', 'P, M, G', 1),
+('Caneca The Beatles - Logo Preto', 'Caneca de cerâmica para colecionadores.', 29.90, 1, 'caneca', 25, NULL, 'Branca', NULL, 0),
+('Camiseta Taylor Swift - Lover', 'Camiseta rosa com arte inspirada no álbum Lover.', 49.90, 2, 'camiseta', 12, NULL, 'Rosa', 'P, M, G', 1),
+('Pôster Taylor Swift - Red', 'Pôster colorido de 60 por 40 centímetros.', 35.90, 2, 'poster', 30, NULL, NULL, NULL, 0),
+('Camiseta BTS - Dynamite', 'Camiseta preta com logo do BTS.', 54.90, 3, 'camiseta', 20, NULL, 'Preta', 'P, M, G', 1),
+('Boné BTS', 'Boné de algodão com aplicação frontal.', 44.90, 3, 'acessorio', 18, NULL, 'Preto', 'Único', 0),
+('Figura Naruto - Hokage', 'Miniatura do Naruto como Hokage.', 39.90, 4, 'acessorio', 10, NULL, NULL, NULL, 0),
+('Pôster Demon Slayer', 'Pôster colorido de 50 por 70 centímetros.', 32.90, 4, 'poster', 22, NULL, NULL, NULL, 0),
+('Moletom Anime Mix', 'Moletom com vários personagens de anime.', 79.90, 4, 'moletom', 0, NULL, 'Cinza', 'P, M, G', 0),
+('Camiseta The Beatles - Revolver', 'Camiseta de algodão com estampa em preto e branco inspirada na capa do álbum Revolver.', 64.90, 1, 'camiseta', 18, NULL, 'Branca', 'P, M, G, GG', 1),
+('Caneca Taylor Swift - Midnights', 'Caneca de cerâmica fosca com elementos visuais da era Midnights.', 34.90, 2, 'caneca', 25, NULL, 'Azul Marinho', NULL, 0),
+('Moletom Taylor Swift - Folklore', 'Moletom estilo oversized em tom cinza mescla com bordado minimalista Folklore.', 94.90, 2, 'moletom', 10, NULL, 'Cinza', 'P, M, G', 1),
+('Moletom BTS - Love Yourself', 'Moletom de algodão com capuz e estampa florida inspirada na era Love Yourself.', 99.90, 3, 'moletom', 14, NULL, 'Rosa Bebê', 'P, M, G', 1),
+('Caneca BTS - Butter', 'Caneca amarela vibrante com logo oficial do single Butter.', 32.90, 3, 'caneca', 20, NULL, 'Amarela', NULL, 0),
+('Pôster The Beatles - Help!', 'Pôster impresso em papel couchê de alta gramatura com a pose icônica do filme e álbum Help!.', 38.90, 1, 'poster', 28, NULL, NULL, NULL, 0),
+('Camiseta Dragon Ball - Goku Instinto Superior', 'Camiseta em malha penteada com estampa do Goku em sua forma Instinto Superior.', 59.90, 4, 'camiseta', 16, NULL, 'Preta', 'P, M, G, GG', 1),
+('Caneca One Piece - Chapéu de Palha', 'Caneca temática de cerâmica com o símbolo da tripulação do Chapéu de Palha.', 31.90, 4, 'caneca', 22, NULL, 'Branca', NULL, 0),
+('Chaveiro BTS - Logo Purple', 'Chaveiro em acrílico roxo com acabamento premium e o logo característico do BTS.', 24.90, 3, 'acessorio', 35, NULL, 'Roxo', 'Único', 0),
+('Chaveiro Taylor Swift - 13 Heart', 'Chaveiro metálico em formato de coração com o número 13 gravado em baixo-relevo.', 27.90, 2, 'acessorio', 30, NULL, 'Dourado', 'Único', 0);
