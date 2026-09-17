@@ -1,3 +1,6 @@
+<?php
+$imagemHero = obterCaminhoImagem(null, 'hero', 'hero') ?? obterCaminhoImagem(null, 'hero', 'banner');
+?>
 <section class="hero">
     <div class="container">
         <div class="hero__grid">
@@ -8,7 +11,11 @@
                 <a href="produtos.php" class="btn btn--primario">Ver catálogo <?= icone('seta') ?></a>
             </div>
             <div class="hero__campo" aria-hidden="true">
-                <span class="hero__campo-marca">MagicMerch</span>
+                <?php if ($imagemHero): ?>
+                    <img src="<?= escapar($imagemHero) ?>" alt="MagicMerch Banner" class="hero__img">
+                <?php else: ?>
+                    <span class="hero__campo-marca">MagicMerch</span>
+                <?php endif; ?>
             </div>
         </div>
     </div>

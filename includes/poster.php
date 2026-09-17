@@ -9,10 +9,16 @@ function posterProduto(array $p): string
 {
     $cor = acentoPoster($p['categoria'] ?? $p['nome']);
     $esgotado = (int) $p['estoque'] <= 0;
+    $imgUrl = obterCaminhoImagem($p['imagem'] ?? null, 'produtos', $p['id'] ?? null);
+    $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : '');
     ob_start(); ?>
     <a class="poster poster--c<?= $cor ?>" href="produto.php?id=<?= (int) $p['id'] ?>">
-        <div class="poster__campo">
-            <span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($p['nome_artista'] ?: $p['nome'])) ?></span>
+        <div class="<?= $classeCampo ?>">
+            <?php if ($imgUrl): ?>
+                <img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($p['nome']) ?>" class="poster__img">
+            <?php else: ?>
+                <span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($p['nome_artista'] ?: $p['nome'])) ?></span>
+            <?php endif; ?>
             <?php if (!empty($p['categoria'])): ?><span class="tag"><?= escapar($p['categoria']) ?></span><?php endif; ?>
             <span class="poster__nome"><?= escapar($p['nome']) ?></span>
             <span class="poster__campo-preco">R$ <?= number_format((float) $p['preco'], 2, ',', '.') ?></span>
@@ -35,10 +41,16 @@ function posterProduto(array $p): string
 function posterArtista(array $a): string
 {
     $cor = acentoPoster($a['nome']);
+    $imgUrl = obterCaminhoImagem($a['imagem'] ?? null, 'artistas', $a['id'] ?? null);
+    $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : '');
     ob_start(); ?>
     <a class="poster poster--artista poster--c<?= $cor ?>" href="produtos.php?artista=<?= (int) $a['id'] ?>">
-        <div class="poster__campo">
-            <span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($a['nome'])) ?></span>
+        <div class="<?= $classeCampo ?>">
+            <?php if ($imgUrl): ?>
+                <img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($a['nome']) ?>" class="poster__img">
+            <?php else: ?>
+                <span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($a['nome'])) ?></span>
+            <?php endif; ?>
             <span class="tag"><?= (int) ($a['total'] ?? 0) ?> produtos</span>
             <span class="poster__nome"><?= escapar($a['nome']) ?></span>
         </div>

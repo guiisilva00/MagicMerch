@@ -34,6 +34,38 @@ function acentoPoster(string $chave): int { return (int) (crc32($chave) % 5) + 1
 // Primeira letra visível de um nome, em maiúscula, para a inicial-fantasma dos pôsteres.
 function inicial(string $nome): string { return mb_strtoupper(mb_substr(trim($nome), 0, 1)); }
 
+/**
+ * Localiza e resolve o caminho da imagem de um item (produto, artista, hero).
+ * Suporta URLs completas, caminhos relativos e busca por arquivo em disco por ID/slug.
+ */
+function obterCaminhoImagem(?string $imagem, string $pasta = 'produtos', $identificador = null): ?string
+{
+    if (!empty($imagem)) {
+        $caminho = trim($imagem);
+        if (preg_match('#^https?://#i', $caminho) || str_starts_with($caminho, '/') || str_starts_with($caminho, 'assets/')) {
+            return $caminho;
+        }
+        $caminhoRelativo = 'assets/img/' . trim($pasta, '/') . '/' . ltrim($caminho, '/');
+        if (file_exists(__DIR__ . '/../' . $caminhoRelativo)) {
+            return $caminhoRelativo;
+        }
+        return $caminho;
+    }
+
+    if ($identificador !== null && $identificador !== '') {
+        $extensoes = ['jpg', 'jpeg', 'png', 'webp', 'svg'];
+        $base = 'assets/img/' . trim($pasta, '/') . '/';
+        foreach ($extensoes as $ext) {
+            $teste = $base . $identificador . '.' . $ext;
+            if (file_exists(__DIR__ . '/../' . $teste)) {
+                return $teste;
+            }
+        }
+    }
+
+    return null;
+}
+
 // ----------------------------------------------------------------------------
 // Consultas de leitura (atalhos finos sobre o CRUD)
 // ----------------------------------------------------------------------------

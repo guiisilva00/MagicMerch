@@ -49,11 +49,18 @@ require 'includes/header.php'; ?>
             <p>Esse item pode ter saído do catálogo.</p>
             <a class="btn btn--linha" href="produtos.php">Voltar ao catálogo</a>
         </div>
-    <?php else: ?>
+    <?php else:
+        $imgUrlProduto = obterCaminhoImagem($produto['imagem'] ?? null, 'produtos', $produto['id'] ?? null);
+        $classeCampoDetalhe = 'poster__campo' . ($imgUrlProduto ? ' poster__campo--com-imagem' : '');
+    ?>
         <article class="detalhe">
             <div class="poster poster--detalhe poster--c<?= $corProduto ?>">
-                <div class="poster__campo">
-                    <span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($produto['nome_artista'] ?: $produto['nome'])) ?></span>
+                <div class="<?= $classeCampoDetalhe ?>">
+                    <?php if ($imgUrlProduto): ?>
+                        <img src="<?= escapar($imgUrlProduto) ?>" alt="<?= escapar($produto['nome']) ?>" class="poster__img">
+                    <?php else: ?>
+                        <span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($produto['nome_artista'] ?: $produto['nome'])) ?></span>
+                    <?php endif; ?>
                     <span class="tag"><?= escapar($produto['categoria']) ?></span>
                     <span class="poster__nome"><?= escapar($produto['nome']) ?></span>
                     <?php if ($produto['estoque'] <= 0): ?><span class="poster__esgotado">Esgotado</span><?php endif; ?>

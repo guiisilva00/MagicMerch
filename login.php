@@ -20,26 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 redirecionar($u['tipo'] === 'administrador' ? 'admin/index.php' : ($_SESSION['retorno'] ?? 'perfil.php'));
             }
             $erro = 'E-mail ou senha inválidos.';
-        } elseif ($_POST['acao'] === 'cadastrar') {
-            $nome = trim($_POST['nome']);
-            $email = trim($_POST['email']);
-            if ($nome === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($_POST['senha']) < 8)
-                $erro = 'Informe nome, e-mail válido e senha com ao menos 8 caracteres.';
-            elseif (read($pdo, 'usuarios', 'email = ?', [$email]))
-                $erro = 'Este e-mail já possui cadastro.';
-            else {
-                create($pdo, 'usuarios', [
-                    'nome' => $nome,
-                    'email' => $email,
-                    'senha' => password_hash($_POST['senha'], PASSWORD_BCRYPT),
-                    'telefone' => trim($_POST['telefone']),
-                ]);
-                mensagemFlash('sucesso', 'Cadastro realizado. Faça seu login.');
-                redirecionar('login.php');
-            }
-        } else {
-            mensagemFlash('sucesso', 'Se o e-mail estiver cadastrado, as instruções de recuperação foram simuladas nesta tela.');
-            redirecionar('login.php');
         }
     }
 }
@@ -64,26 +44,10 @@ require 'includes/header.php'; ?>
                 <button class="btn btn--primario btn--bloco">Entrar</button>
             </form>
 
-            <details class="acordeao">
-                <summary>Criar uma conta</summary>
-                <form method="post" class="acordeao__corpo stack">
-                    <input type="hidden" name="acao" value="cadastrar">
-                    <label class="campo"><span>Nome</span><input required name="nome"></label>
-                    <label class="campo"><span>E-mail</span><input required type="email" name="email"></label>
-                    <label class="campo"><span>Telefone</span><input name="telefone"></label>
-                    <label class="campo"><span>Senha (mín. 8 caracteres)</span><input required minlength="8" type="password" name="senha"></label>
-                    <button class="btn btn--linha btn--bloco">Criar conta</button>
-                </form>
-            </details>
-
-            <details class="acordeao">
-                <summary>Esqueci minha senha</summary>
-                <form method="post" class="acordeao__corpo stack">
-                    <input type="hidden" name="acao" value="recuperar">
-                    <label class="campo"><span>E-mail</span><input required type="email" name="email"></label>
-                    <button class="btn btn--texto">Simular recuperação</button>
-                </form>
-            </details>
+            <div class="mt-4 stack" style="gap: var(--s-2);">
+                <p>Não possui uma conta? <a href="cadastro.php" class="btn--texto">Criar conta</a></p>
+                <p>Esqueceu ou deseja alterar a senha? <a href="editar-senha.php" class="btn--texto">Editar / Recuperar senha</a></p>
+            </div>
         </div>
     </div>
 </main>
