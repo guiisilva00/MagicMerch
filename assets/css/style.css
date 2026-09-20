@@ -502,6 +502,13 @@ textarea {
   color: #b3123e;
 }
 
+.btn--favorito.is-ativo {
+  color: var(--razzmatazz);
+}
+.btn--favorito.is-ativo .icone {
+  fill: currentColor;
+}
+
 .btn--bloco {
   width: 100%;
   justify-content: center;

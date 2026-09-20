@@ -37,6 +37,9 @@ if ($produto) {
         $avaliacoes[] = $a;
     }
 }
+$jaFavoritado = $produto && estaLogado()
+    ? (bool) read($pdo, 'favoritos', 'usuario_id = ? AND produto_id = ?', [(int) usuarioAtual()['id'], $id])
+    : false;
 $tituloPagina = $produto ? $produto['nome'] : 'Produto';
 $mediaNota = $avaliacoes ? round(array_sum(array_column($avaliacoes, 'nota')) / count($avaliacoes), 1) : null;
 $corProduto = $produto ? acentoPoster($produto['categoria'] ?? $produto['nome']) : 1;
@@ -87,7 +90,7 @@ require 'includes/header.php'; ?>
                     <?php if ($produto['estoque'] > 0): ?>
                         <form method="post"><button class="btn btn--primario" name="carrinho"><?= icone('sacola') ?> Adicionar ao carrinho</button></form>
                     <?php endif; ?>
-                    <form method="post"><button class="btn--texto" name="favorito"><?= icone('coracao') ?> Salvar favorito</button></form>
+                    <form method="post"><button class="btn--texto btn--favorito<?= $jaFavoritado ? ' is-ativo' : '' ?>" name="favorito"><?= icone('coracao') ?> <?= $jaFavoritado ? 'Nos seus favoritos' : 'Salvar favorito' ?></button></form>
                 </div>
 
                 <p class="detalhe__desc"><?= nl2br(escapar($produto['descricao'])) ?></p>
