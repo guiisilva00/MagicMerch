@@ -37,6 +37,11 @@ function inicial(string $nome): string { return mb_strtoupper(mb_substr(trim($no
 /**
  * Localiza e resolve o caminho da imagem de um item (produto, artista, hero).
  * Suporta URLs completas, caminhos relativos e busca por arquivo em disco por ID/slug.
+ *
+ * Uma foto aparece automaticamente de duas formas: (1) o upload do admin já grava
+ * o caminho certo na coluna `imagem`, ou (2) para os dados de seed (sem `imagem`
+ * no banco), basta o arquivo se chamar `{id}.{extensão}` dentro de
+ * `assets/img/{produtos|artistas}/` — sem precisar editar nada em `MM.sql`.
  */
 function obterCaminhoImagem(?string $imagem, string $pasta = 'produtos', $identificador = null): ?string
 {
@@ -53,7 +58,7 @@ function obterCaminhoImagem(?string $imagem, string $pasta = 'produtos', $identi
     }
 
     if ($identificador !== null && $identificador !== '') {
-        $extensoes = ['jpg', 'jpeg', 'png', 'webp', 'svg'];
+        $extensoes = ['jpg', 'jpeg', 'png', 'webp', 'svg', 'jfif'];
         $base = 'assets/img/' . trim($pasta, '/') . '/';
         foreach ($extensoes as $ext) {
             $teste = $base . $identificador . '.' . $ext;
