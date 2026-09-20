@@ -119,6 +119,17 @@ function buscarArtistas(PDO $pdo): array
     return readAll($pdo, 'artistas', '1 ORDER BY nome');
 }
 
+// Total de produtos por artista_id, usado na Home e na lista de artistas.
+function contarProdutosPorArtista(array $produtos): array
+{
+    $totais = [];
+    foreach ($produtos as $produto) {
+        $chave = $produto['artista_id'];
+        $totais[$chave] = ($totais[$chave] ?? 0) + 1;
+    }
+    return $totais;
+}
+
 // Categorias distintas derivadas dos produtos (não há tabela própria).
 function buscarCategorias(PDO $pdo): array
 {

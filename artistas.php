@@ -14,11 +14,7 @@ $disponibilidades = ['' => 'Todos', 'em_estoque' => 'Em estoque', 'esgotados' =>
 
 if ($pdo && !$colecao) {
     $arts = buscarArtistas($pdo);
-    $totais = [];
-    foreach (readAll($pdo, 'produtos') as $produto) {
-        $chave = $produto['artista_id'];
-        $totais[$chave] = ($totais[$chave] ?? 0) + 1;
-    }
+    $totais = contarProdutosPorArtista(readAll($pdo, 'produtos'));
     foreach ($arts as &$a) {
         $a['total'] = $totais[$a['id']] ?? 0;
     }

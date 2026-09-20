@@ -10,9 +10,10 @@ $destaques = [];
 if ($pdo) {
     $produtos = readAll($pdo, 'produtos');
     $artistasPorId = indexarPorId(readAll($pdo, 'artistas'));
+    $totais = contarProdutosPorArtista($produtos);
 
     foreach ($artistasPorId as $a) {
-        $a['total'] = count(array_filter($produtos, fn($p) => $p['artista_id'] == $a['id']));
+        $a['total'] = $totais[$a['id']] ?? 0;
         $artistasDestaque[] = $a;
     }
     usort($artistasDestaque, fn($x, $y) => strcmp($x['nome'], $y['nome']));

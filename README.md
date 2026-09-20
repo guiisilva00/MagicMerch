@@ -18,3 +18,8 @@ MVP acadêmico de loja virtual em PHP e MySQL.
 Catálogo com filtros, artistas, cadastro/login, favoritos, avaliações, carrinho persistente, checkout Pix/cartão simulado, frete fixo, pedidos, fidelidade e painel administrativo para produtos, estoque, pedidos e relatórios.
 
 O pagamento e recuperação de senha são simulações locais; não há integração externa.
+
+## Documentação
+
+O panorama completo e atualizado do projeto (páginas, banco, componentes, regras) fica
+em `DOCUMENTACAO_ESTADO_ATUAL.md`.
