@@ -1,7 +1,7 @@
     <footer class="rodape">
         <div class="container rodape__grid">
             <div class="rodape__col">
-                <p class="rodape__marca">MagicMerch</p>
+                <img src="assets/img/logo/logo.svg" alt="MagicMerch" class="rodape__marca">
                 <p>Merch feito à mão dos seus artistas e bandas favoritos. Peças únicas, edições limitadas.</p>
             </div>
             <div class="rodape__col">
@@ -22,5 +22,4 @@
         </div>
     </footer>
 </body>
-
 </html>

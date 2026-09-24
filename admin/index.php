@@ -171,9 +171,7 @@ $mesesGrafico = [
     </article>
 </section>
 
-<!-- 2. Linha do Meio: Gráfico de Vendas + Pedidos Recentes -->
 <section class="grid-dashboard grid-dashboard--duas-colunas">
-    <!-- Bloco: Gráfico de Vendas -->
     <article class="painel-card">
         <header class="painel-card__header">
             <div>
@@ -196,7 +194,6 @@ $mesesGrafico = [
                     </linearGradient>
                 </defs>
 
-                <!-- Linhas guia horizontais -->
                 <line x1="20" y1="35" x2="500" y2="35" stroke="#f1f5f9" stroke-dasharray="4 4" stroke-width="1.2" />
                 <line x1="20" y1="75" x2="500" y2="75" stroke="#f1f5f9" stroke-dasharray="4 4" stroke-width="1.2" />
                 <line x1="20" y1="115" x2="500" y2="115" stroke="#f1f5f9" stroke-dasharray="4 4" stroke-width="1.2" />
