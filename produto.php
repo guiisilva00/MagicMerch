@@ -93,6 +93,15 @@ require 'includes/header.php'; ?>
                     <form method="post"><button class="btn--texto btn--favorito<?= $jaFavoritado ? ' is-ativo' : '' ?>" name="favorito"><?= icone('coracao') ?> <?= $jaFavoritado ? 'Nos seus favoritos' : 'Salvar favorito' ?></button></form>
                 </div>
 
+                <?php if (eAdministrador()): ?>
+                    <div style="margin: 1rem 0; padding: 0.75rem 1rem; background: #fff1f6; border: 1px dashed var(--razzmatazz); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
+                        <span style="font-size: 0.85rem; font-weight: 500; color: var(--ink);">Modo Administrador</span>
+                        <a href="admin/produtos.php?editar=<?= $produto['id'] ?>" class="btn btn--linha" style="font-size: 0.8rem; padding: 0.4rem 0.85rem;">
+                            Editar este produto no painel
+                        </a>
+                    </div>
+                <?php endif; ?>
+
                 <p class="detalhe__desc"><?= nl2br(escapar($produto['descricao'])) ?></p>
             </div>
         </article>
