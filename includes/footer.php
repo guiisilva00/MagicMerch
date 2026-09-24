@@ -14,11 +14,11 @@
                 <h3>Conta</h3>
                 <a href="<?= estaLogado() ? 'perfil.php' : 'login.php' ?>"><?= estaLogado() ? 'Minha conta' : 'Entrar' ?></a>
                 <a href="carrinho.php">Carrinho</a>
-                <p>Pagamento Pix e cartão (simulados neste MVP).</p>
+                <p>Pagamento Pix e cartão de débito ou crédito.</p>
             </div>
         </div>
         <div class="container">
-            <p class="rodape__fim">&copy; <?= date('Y') ?> MagicMerch. Projeto acadêmico. Todos os direitos reservados.</p>
+            <p class="rodape__fim">&copy; <?= date('Y') ?> MagicMerch.   Todos os direitos reservados.</p>
         </div>
     </footer>
 </body>
