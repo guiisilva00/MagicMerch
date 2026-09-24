@@ -4,6 +4,10 @@ declare(strict_types=1);
 require_once __DIR__ . '/database.php';
 require_once __DIR__ . '/crud.php';
 
+if (ob_get_level() === 0) {
+    ob_start();
+}
+
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
@@ -22,7 +26,14 @@ function escapar(string $valor): string { return htmlspecialchars($valor, ENT_QU
 function usuarioAtual(): ?array { return $_SESSION['usuario'] ?? null; }
 function estaLogado(): bool { return usuarioAtual() !== null; }
 function eAdministrador(): bool { return estaLogado() && usuarioAtual()['tipo'] === 'administrador'; }
-function redirecionar(string $url): never { header('Location: ' . $url); exit; }
+function redirecionar(string $url): never {
+    if (!headers_sent()) {
+        header('Location: ' . $url);
+    } else {
+        echo '<meta http-equiv="refresh" content="0;url=' . escapar($url) . '">';
+    }
+    exit;
+}
 function exigirLogin(string $destino = 'login.php'): void { if (!estaLogado()) { $_SESSION['retorno'] = basename($_SERVER['PHP_SELF']); redirecionar($destino); } }
 function exigirAdministrador(): void { if (!eAdministrador()) { redirecionar('login.php'); } }
 function mensagemFlash(?string $tipo = null, ?string $texto = null): ?array { if ($tipo !== null) { $_SESSION['flash'] = [$tipo, $texto]; return null; } $m = $_SESSION['flash'] ?? null; unset($_SESSION['flash']); return $m; }
@@ -33,6 +44,33 @@ function acentoPoster(string $chave): int { return (int) (crc32($chave) % 5) + 1
 
 // Primeira letra visível de um nome, em maiúscula, para a inicial-fantasma dos pôsteres.
 function inicial(string $nome): string { return mb_strtoupper(mb_substr(trim($nome), 0, 1)); }
+
+/**
+ * Identifica se um produto é uma peça de vestuário/roupa (camiseta, moletom, etc.)
+ */
+function eRoupa(?array $produto): bool
+{
+    if (!$produto) {
+        return false;
+    }
+    $categoria = mb_strtolower(trim($produto['categoria'] ?? ''));
+    $nome = mb_strtolower(trim($produto['nome'] ?? ''));
+
+    $categoriasRoupa = ['camiseta', 'camisetas', 'moletom', 'moletons', 'roupa', 'roupas', 'vestuario', 'vestuário'];
+    if (in_array($categoria, $categoriasRoupa, true)) {
+        return true;
+    }
+
+    if (str_starts_with($categoria, 'camis') || str_starts_with($categoria, 'molet')) {
+        return true;
+    }
+
+    if (str_contains($nome, 'camiseta') || str_contains($nome, 'moletom') || str_contains($nome, 'camisa') || str_contains($nome, 'blusa')) {
+        return true;
+    }
+
+    return false;
+}
 
 /**
  * Localiza e resolve o caminho da imagem de um item (produto, artista, hero).

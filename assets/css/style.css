@@ -647,10 +647,11 @@ textarea {
 }
 
 .poster:hover .poster__img {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
-.poster__campo--com-imagem::before {
+/* Overlay escuro somente para pôster de artista (onde há texto sobre a foto) */
+.poster--artista .poster__campo--com-imagem::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -658,12 +659,12 @@ textarea {
   z-index: 1;
 }
 
-.poster__campo--com-imagem * {
+.poster--artista .poster__campo--com-imagem * {
   z-index: 2;
   position: relative;
 }
 
-.poster__campo--com-imagem {
+.poster--artista .poster__campo--com-imagem {
   color: #ffffff;
 }
 
@@ -842,23 +843,53 @@ textarea {
   overflow: hidden;
 }
 
-/* Modo detalhe — pôster grande da página de produto */
+/* Modo detalhe — imagem principal da página de produto */
 .poster--detalhe {
   border: none;
+  max-width: 520px;
+  width: 100%;
+}
+
+.poster--detalhe:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .poster--detalhe .poster__campo {
-  aspect-ratio: auto;
-  min-height: 460px;
-  padding: var(--s-6);
+  aspect-ratio: 1 / 1;
+  max-height: 480px;
+  min-height: 320px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--s-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.poster--detalhe .poster__img {
+  position: relative;
+  inset: auto;
+  max-width: 100%;
+  max-height: 440px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: auto;
+  display: block;
 }
 
 .poster--detalhe .poster__nome {
-  font-size: var(--step-5);
+  font-size: var(--step-4);
+  text-align: center;
 }
 
 .poster--detalhe .poster__inicial {
-  font-size: 22rem;
+  font-size: 16rem;
 }
 
 /* Mini-pôster — carrinho / checkout */
@@ -1372,6 +1403,7 @@ textarea {
   .detalhe {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
     gap: var(--s-8);
+    align-items: start;
   }
 }
 
@@ -1397,6 +1429,78 @@ textarea {
   font-weight: 700;
   font-size: var(--step-3);
   color: var(--raspberry-plum);
+}
+
+/* -------------------------------------------------------------------------
+   Seletor de tamanho (apenas para roupas)
+   ------------------------------------------------------------------------- */
+.seletor-tamanho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-block: var(--s-2);
+}
+
+.seletor-tamanho__rotulo {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.seletor-tamanho__grade {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.seletor-tamanho__item {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.seletor-tamanho__radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.seletor-tamanho__botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 var(--s-3);
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition: all 0.15s var(--ease);
+}
+
+.seletor-tamanho__item:hover .seletor-tamanho__botao {
+  border-color: var(--vivid-orchid);
+  background: var(--paper-2);
+}
+
+/* Tamanho selecionado: borda rosa/roxa, fundo levemente rosado, texto destacado */
+.seletor-tamanho__radio:checked + .seletor-tamanho__botao {
+  border-color: var(--razzmatazz);
+  background: #fff1f6;
+  color: var(--razzmatazz);
+  font-weight: 700;
+  box-shadow: 0 0 0 1px var(--razzmatazz);
+}
+
+.seletor-tamanho__radio:focus-visible + .seletor-tamanho__botao {
+  outline: 2px solid var(--razzmatazz);
+  outline-offset: 2px;
 }
 
 .detalhe__acoes {

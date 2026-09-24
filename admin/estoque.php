@@ -1,11 +1,15 @@
 <?php
-$tituloPaginaAdmin = 'Gestão de estoque';
-require __DIR__ . '/../includes/cabecalho-admin.php';
+require_once __DIR__ . '/../config/app.php';
+exigirAdministrador();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     update($pdo, 'produtos', ['estoque' => max(0, (int) $_POST['estoque'])], 'id = ?', [(int) $_POST['id']]);
     redirecionar('estoque.php');
 }
+
+$tituloPaginaAdmin = 'Gestão de estoque';
+require __DIR__ . '/../includes/cabecalho-admin.php';
+
 $ps = readAll($pdo, 'produtos', '1 ORDER BY estoque, nome');
 ?>
 <h1>Estoque</h1>

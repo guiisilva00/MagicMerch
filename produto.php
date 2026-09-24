@@ -63,9 +63,8 @@ require 'includes/header.php'; ?>
                         <img src="<?= escapar($imgUrlProduto) ?>" alt="<?= escapar($produto['nome']) ?>" class="poster__img">
                     <?php else: ?>
                         <span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($produto['nome_artista'] ?: $produto['nome'])) ?></span>
+                        <span class="poster__nome"><?= escapar($produto['nome']) ?></span>
                     <?php endif; ?>
-                    <span class="tag"><?= escapar($produto['categoria']) ?></span>
-                    <span class="poster__nome"><?= escapar($produto['nome']) ?></span>
                     <?php if ($produto['estoque'] <= 0): ?><span class="poster__esgotado">Esgotado</span><?php endif; ?>
                 </div>
             </div>
@@ -81,14 +80,36 @@ require 'includes/header.php'; ?>
                     <?php else: ?>
                         <span class="tag tag--fim">Esgotado</span>
                     <?php endif; ?>
-                    <?php if ($produto['cor'] || $produto['tamanho']): ?>
-                        <span class="tag tag--vazio"><?= escapar(trim(($produto['cor'] ?? '') . ' · ' . ($produto['tamanho'] ?? ''), ' ·')) ?></span>
+                    <?php if (!empty($produto['categoria'])): ?>
+                        <span class="tag tag--vazio"><?= escapar(ucfirst($produto['categoria'])) ?></span>
+                    <?php endif; ?>
+                    <?php if (!empty($produto['cor'])): ?>
+                        <span class="tag tag--vazio">Cor: <?= escapar($produto['cor']) ?></span>
+                    <?php endif; ?>
+                    <?php if (!eRoupa($produto) && !empty($produto['tamanho'])): ?>
+                        <span class="tag tag--vazio"><?= escapar($produto['tamanho']) ?></span>
                     <?php endif; ?>
                 </p>
 
+                <p class="detalhe__desc"><?= nl2br(escapar($produto['descricao'])) ?></p>
+
+                <?php if (eRoupa($produto)): ?>
+                    <div class="seletor-tamanho">
+                        <span class="seletor-tamanho__rotulo">Tamanho:</span>
+                        <div class="seletor-tamanho__grade" role="radiogroup" aria-label="Selecione o tamanho">
+                            <?php foreach (['P', 'M', 'G', 'GG'] as $idx => $tam): ?>
+                                <label class="seletor-tamanho__item">
+                                    <input type="radio" name="tamanho" value="<?= $tam ?>" form="form-carrinho" <?= $idx === 1 ? 'checked' : '' ?> class="seletor-tamanho__radio">
+                                    <span class="seletor-tamanho__botao"><?= $tam ?></span>
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
                 <div class="detalhe__acoes">
                     <?php if ($produto['estoque'] > 0): ?>
-                        <form method="post"><button class="btn btn--primario" name="carrinho"><?= icone('sacola') ?> Adicionar ao carrinho</button></form>
+                        <form method="post" id="form-carrinho"><button class="btn btn--primario" name="carrinho"><?= icone('sacola') ?> Adicionar ao carrinho</button></form>
                     <?php endif; ?>
                     <form method="post"><button class="btn--texto btn--favorito<?= $jaFavoritado ? ' is-ativo' : '' ?>" name="favorito"><?= icone('coracao') ?> <?= $jaFavoritado ? 'Nos seus favoritos' : 'Salvar favorito' ?></button></form>
                 </div>
