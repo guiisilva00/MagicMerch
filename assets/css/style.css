@@ -1157,6 +1157,226 @@ textarea {
   z-index: 2;
 }
 
+/* Home — objetivos */
+.objetivos {
+  padding-block: var(--s-9);
+  border-bottom: 1px solid var(--line);
+}
+
+.objetivos__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-6);
+}
+
+.objetivos__cabecalho {
+  align-self: end;
+}
+
+.objetivos__sobretitulo {
+  margin-bottom: var(--s-3);
+  color: var(--razzmatazz);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.objetivos__titulo {
+  font-size: var(--step-6);
+}
+
+.objetivos__imagem {
+  display: grid;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  overflow: hidden;
+  place-items: center;
+  border-radius: var(--radius);
+  background: var(--pastel-petal);
+  color: var(--raspberry-plum);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: var(--step-2);
+  font-style: italic;
+}
+
+.objetivos__imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.objetivos__introducao {
+  padding: var(--s-5);
+  border-left: 4px solid var(--vivid-orchid);
+  background: var(--paper-2);
+  font-size: var(--step-1);
+}
+
+.objetivos__lista {
+  display: grid;
+  gap: var(--s-5);
+  list-style: none;
+}
+
+.objetivos__item {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+}
+
+.objetivos__numero {
+  color: var(--razzmatazz);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.objetivos__item h3 {
+  margin-bottom: var(--s-2);
+  font-family: inherit;
+  font-size: var(--step-1);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.objetivos__item p {
+  color: var(--ink-2);
+  font-size: var(--step-0);
+}
+
+@media (min-width: 768px) {
+  .objetivos__grade {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    grid-template-areas:
+      "titulo imagem"
+      "intro imagem"
+      "lista lista";
+    align-items: center;
+    column-gap: var(--s-8);
+    row-gap: var(--s-5);
+  }
+
+  .objetivos__cabecalho { grid-area: titulo; }
+  .objetivos__imagem { grid-area: imagem; }
+  .objetivos__introducao { grid-area: intro; }
+  .objetivos__lista {
+    grid-area: lista;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--s-6);
+    margin-top: var(--s-4);
+  }
+}
+
+/* Home — por que escolher a MagicMerch */
+.porque {
+  padding-block: var(--s-9);
+  border-bottom: 1px solid var(--line);
+}
+
+.porque__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "titulo"
+    "imagem"
+    "intro"
+    "lista";
+  gap: var(--s-5);
+}
+
+.porque__cabecalho { grid-area: titulo; }
+
+.porque__sobretitulo {
+  margin-bottom: var(--s-3);
+  color: var(--razzmatazz);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.porque__titulo {
+  font-size: var(--step-5);
+}
+
+.porque__imagem {
+  display: grid;
+  grid-area: imagem;
+  width: 100%;
+  aspect-ratio: 736 / 917;
+  overflow: hidden;
+  place-items: center;
+  border-radius: var(--radius);
+  background: var(--pastel-petal);
+  color: var(--raspberry-plum);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: var(--step-2);
+  font-style: italic;
+}
+
+.porque__imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.porque__introducao {
+  grid-area: intro;
+  max-width: 52ch;
+  color: var(--ink-2);
+  font-size: var(--step-1);
+}
+
+.porque__lista {
+  display: grid;
+  grid-area: lista;
+  gap: var(--s-5);
+  list-style: none;
+}
+
+.porque__item {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+}
+
+.porque__numero {
+  color: var(--razzmatazz);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.porque__item h3 {
+  margin-bottom: var(--s-2);
+  font-family: inherit;
+  font-size: var(--step-1);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.porque__item p {
+  color: var(--ink-2);
+}
+
+@media (min-width: 768px) {
+  .porque__grade {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    grid-template-areas:
+      "imagem titulo"
+      "imagem intro"
+      "imagem lista";
+    align-items: center;
+    column-gap: var(--s-8);
+    row-gap: var(--s-5);
+  }
+
+  .porque__lista { gap: var(--s-4); }
+}
+
 /* -------------------------------------------------------------------------
    11. Catálogo — barra de filtros
    ------------------------------------------------------------------------- */
