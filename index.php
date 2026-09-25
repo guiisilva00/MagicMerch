@@ -2,7 +2,6 @@
 $tituloPagina = 'Início';
 $paginaNavegacaoAtiva = 'Início';
 require_once 'includes/header.php';
-require_once 'includes/poster.php';
 
 // Artistas com contagem de produtos e produtos em destaque — tudo via CRUD.
 $artistasDestaque = [];
@@ -18,13 +17,6 @@ if ($pdo) {
     }
     usort($artistasDestaque, fn($x, $y) => strcmp($x['nome'], $y['nome']));
 
-    // $destaques = array_filter($produtos, fn($p) => (int) $p['destaque'] === 1);
-    // usort($destaques, fn($x, $y) => (int) $y['vendas'] <=> (int) $x['vendas']);
-    // $destaques = array_slice($destaques, 0, 4);
-    // foreach ($destaques as &$d) {
-    //     $d['nome_artista'] = $artistasPorId[$d['artista_id']]['nome'] ?? '';
-    // }
-    // unset($d);
 }
 ?>
 <main>
@@ -108,15 +100,27 @@ if ($pdo) {
         </div>
     </section>
 
-    <?php if ($destaques): ?>
-        <section class="secao container pagina">
-            <h2 class="secao-titulo">Em destaque</h2>
-            <div class="grade">
-                <?php foreach ($destaques as $produto): ?><?= posterProduto($produto) ?><?php endforeach; ?>
+    <section class="faixa faixa--pastel">
+        <div class="container">
+            <h2 class="secao-titulo">Navegue por artista</h2>
+            <div class="grade grade--artistas">
+                <?php foreach ($artistasDestaque as $artista): ?>
+                    <?php
+                    $cor = acentoPoster($artista['nome']);
+                    $imgUrl = obterCaminhoImagem($artista['imagem'] ?? null, 'artistas', $artista['id'] ?? null);
+                    $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : '');
+                    ?>
+                    <a class="poster poster--artista poster--c<?= $cor ?>" href="artistas.php?artista=<?= (int) $artista['id'] ?>">
+                        <div class="<?= $classeCampo ?>">
+                            <?php if ($imgUrl): ?><img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($artista['nome']) ?>" class="poster__img"><?php else: ?><span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($artista['nome'])) ?></span><?php endif; ?>
+                            <span class="tag"><?= (int) ($artista['total'] ?? 0) ?> produtos</span>
+                        </div>
+                        <div class="poster__meta"><span class="poster__meta-desc"><?= escapar($artista['descricao'] ?? '') ?></span></div>
+                    </a>
+                <?php endforeach; ?>
             </div>
-        </section>
-    <?php endif; ?>
-
-    <?php require 'includes/components/artists-grid.php'; ?>
+            <p class="secao-acao"><a href="artistas.php" class="btn btn--linha">Ver todos os artistas <?= icone('seta') ?></a></p>
+        </div>
+    </section>
 </main>
 <?php require 'includes/footer.php'; ?>

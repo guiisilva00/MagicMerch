@@ -2,7 +2,6 @@
 $tituloPagina = 'Produtos';
 $paginaNavegacaoAtiva = 'Produtos';
 require_once 'includes/header.php';
-require_once 'includes/poster.php';
 
 $filtros = [
     'busca' => trim($_GET['busca'] ?? ''),
@@ -102,7 +101,21 @@ if ($pdo === null) {
         </div>
     <?php else: ?>
         <div class="grade" aria-label="Produtos encontrados">
-            <?php foreach ($produtos as $produto): ?><?= posterProduto($produto) ?><?php endforeach; ?>
+            <?php foreach ($produtos as $produto): ?>
+                <?php
+                $cor = acentoPoster($produto['categoria'] ?? $produto['nome']);
+                $esgotado = (int) $produto['estoque'] <= 0;
+                $imgUrl = obterCaminhoImagem($produto['imagem'] ?? null, 'produtos');
+                $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : '');
+                ?>
+                <a class="poster poster--c<?= $cor ?>" href="produto.php?id=<?= (int) $produto['id'] ?>">
+                    <div class="<?= $classeCampo ?>">
+                        <?php if ($imgUrl): ?><img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($produto['nome']) ?>" class="poster__img"><?php else: ?><span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($produto['nome_artista'] ?: $produto['nome'])) ?></span><span class="poster__nome"><?= escapar($produto['nome']) ?></span><?php endif; ?>
+                        <?php if ($esgotado): ?><span class="poster__esgotado">Esgotado</span><?php endif; ?>
+                    </div>
+                    <div class="poster__meta"><span class="poster__meta-artista"><?= escapar($produto['nome_artista'] ?? '') ?></span><span class="poster__meta-nome"><?= escapar($produto['nome']) ?></span><span class="poster__meta-preco">R$ <?= number_format((float) $produto['preco'], 2, ',', '.') ?></span></div>
+                </a>
+            <?php endforeach; ?>
         </div>
     <?php endif; ?>
 </main>
