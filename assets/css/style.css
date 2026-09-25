@@ -164,13 +164,7 @@ textarea {
   width: 100%;
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: var(--s-4);
-}
-
-@media (min-width: 768px) {
-  .container {
-    padding-inline: var(--s-6);
-  }
+  padding-inline: var(--s-6);
 }
 
 .pagina {
@@ -271,15 +265,9 @@ textarea {
 }
 
 .nav {
-  display: none;
+  display: flex;
   gap: var(--s-1);
   margin-right: auto;
-}
-
-@media (min-width: 900px) {
-  .nav {
-    display: flex;
-  }
 }
 
 .nav__link {
@@ -357,14 +345,9 @@ textarea {
 
 /* Menu mobile — <details>, sem JS */
 .menu {
+  display: none;
   position: relative;
   margin-left: var(--s-1);
-}
-
-@media (min-width: 900px) {
-  .menu {
-    display: none;
-  }
 }
 
 .menu__resumo {
@@ -422,13 +405,7 @@ textarea {
 .rodape__grid {
   display: grid;
   gap: var(--s-6);
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 700px) {
-  .rodape__grid {
-    grid-template-columns: 1.4fr 1fr 1fr;
-  }
+  grid-template-columns: 1.4fr 1fr 1fr;
 }
 
 .rodape__col h3 {
@@ -651,24 +628,6 @@ textarea {
   transform: scale(1.03);
 }
 
-/* Overlay escuro somente para pôster de artista (onde há texto sobre a foto) */
-.poster--artista .poster__campo--com-imagem::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.2) 55%, rgba(0, 0, 0, 0.35) 100%);
-  z-index: 1;
-}
-
-.poster--artista .poster__campo--com-imagem * {
-  z-index: 2;
-  position: relative;
-}
-
-.poster--artista .poster__campo--com-imagem {
-  color: #ffffff;
-}
-
 .poster__inicial {
   position: absolute;
   right: -0.08em;
@@ -821,12 +780,6 @@ textarea {
 /* Modo artista */
 .poster--artista .poster__campo {
   aspect-ratio: 4 / 5;
-  justify-content: flex-end;
-}
-
-.poster--artista .poster__nome {
-  font-style: italic;
-  font-size: var(--step-3);
 }
 
 .poster--artista .poster__inicial {
@@ -837,6 +790,8 @@ textarea {
 .poster--artista .poster__meta-desc {
   color: var(--ink-2);
   font-size: 0.875rem;
+  line-height: 1.4;
+  min-height: 2.8em;
   margin-top: var(--s-1);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -1025,12 +980,7 @@ textarea {
 .duas-colunas {
   display: grid;
   gap: var(--s-6);
-}
-
-@media (min-width: 860px) {
-  .duas-colunas {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 /* <details> como acordeão de formulário */
@@ -1081,14 +1031,8 @@ textarea {
 
 .hero__grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   min-height: 78vh;
-}
-
-@media (min-width: 900px) {
-  .hero__grid {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 .hero__texto {
@@ -1096,14 +1040,8 @@ textarea {
   flex-direction: column;
   justify-content: center;
   gap: var(--s-5);
-  padding: var(--s-8) var(--s-4);
+  padding: var(--s-9) var(--s-6);
   animation: subir 0.6s var(--ease) both;
-}
-
-@media (min-width: 768px) {
-  .hero__texto {
-    padding: var(--s-9) var(--s-6);
-  }
 }
 
 .hero__titulo {
@@ -1165,11 +1103,18 @@ textarea {
 
 .objetivos__grade {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--s-6);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  grid-template-areas:
+    "titulo imagem"
+    "intro imagem"
+    "lista lista";
+  align-items: center;
+  column-gap: var(--s-8);
+  row-gap: var(--s-5);
 }
 
 .objetivos__cabecalho {
+  grid-area: titulo;
   align-self: end;
 }
 
@@ -1188,6 +1133,7 @@ textarea {
 
 .objetivos__imagem {
   display: grid;
+  grid-area: imagem;
   aspect-ratio: 4 / 3;
   width: 100%;
   overflow: hidden;
@@ -1207,6 +1153,7 @@ textarea {
 }
 
 .objetivos__introducao {
+  grid-area: intro;
   padding: var(--s-5);
   border-left: 4px solid var(--vivid-orchid);
   background: var(--paper-2);
@@ -1215,8 +1162,11 @@ textarea {
 
 .objetivos__lista {
   display: grid;
-  gap: var(--s-5);
+  grid-area: lista;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-6);
   list-style: none;
+  margin-top: var(--s-4);
 }
 
 .objetivos__item {
@@ -1246,29 +1196,6 @@ textarea {
   font-size: var(--step-0);
 }
 
-@media (min-width: 768px) {
-  .objetivos__grade {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-    grid-template-areas:
-      "titulo imagem"
-      "intro imagem"
-      "lista lista";
-    align-items: center;
-    column-gap: var(--s-8);
-    row-gap: var(--s-5);
-  }
-
-  .objetivos__cabecalho { grid-area: titulo; }
-  .objetivos__imagem { grid-area: imagem; }
-  .objetivos__introducao { grid-area: intro; }
-  .objetivos__lista {
-    grid-area: lista;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--s-6);
-    margin-top: var(--s-4);
-  }
-}
-
 /* Home — por que escolher a MagicMerch */
 .porque {
   padding-block: var(--s-9);
@@ -1277,13 +1204,14 @@ textarea {
 
 .porque__grade {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
   grid-template-areas:
-    "titulo"
-    "imagem"
-    "intro"
-    "lista";
-  gap: var(--s-5);
+    "imagem titulo"
+    "imagem intro"
+    "imagem lista";
+  align-items: center;
+  column-gap: var(--s-8);
+  row-gap: var(--s-5);
 }
 
 .porque__cabecalho { grid-area: titulo; }
@@ -1332,7 +1260,7 @@ textarea {
 .porque__lista {
   display: grid;
   grid-area: lista;
-  gap: var(--s-5);
+  gap: var(--s-4);
   list-style: none;
 }
 
@@ -1362,21 +1290,6 @@ textarea {
   color: var(--ink-2);
 }
 
-@media (min-width: 768px) {
-  .porque__grade {
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
-    grid-template-areas:
-      "imagem titulo"
-      "imagem intro"
-      "imagem lista";
-    align-items: center;
-    column-gap: var(--s-8);
-    row-gap: var(--s-5);
-  }
-
-  .porque__lista { gap: var(--s-4); }
-}
-
 /* -------------------------------------------------------------------------
    11. Catálogo — barra de filtros
    ------------------------------------------------------------------------- */
@@ -1389,19 +1302,7 @@ textarea {
 .barra-filtros__linha {
   display: grid;
   gap: var(--s-3);
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 640px) {
-  .barra-filtros__linha {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 960px) {
-  .barra-filtros__linha {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .barra-filtros .campo--busca {
@@ -1413,7 +1314,7 @@ textarea {
 }
 
 .filtros-mobile {
-  border: 1px solid var(--line);
+  border: none;
   border-radius: var(--radius);
   padding: 0;
 }
@@ -1423,7 +1324,7 @@ textarea {
   cursor: pointer;
   padding: var(--s-4);
   font-weight: 600;
-  display: flex;
+  display: none;
   align-items: center;
   gap: var(--s-2);
 }
@@ -1437,21 +1338,7 @@ textarea {
 }
 
 .filtros-mobile>summary+* {
-  padding-inline: var(--s-4);
-}
-
-@media (min-width: 768px) {
-  .filtros-mobile {
-    border: none;
-  }
-
-  .filtros-mobile>summary {
-    display: none;
-  }
-
-  .filtros-mobile>summary+* {
-    padding-inline: 0;
-  }
+  padding-inline: 0;
 }
 
 /* Coleção de artista — estilos restritos à página de artistas. */
@@ -1504,24 +1391,11 @@ textarea {
   transform: rotate(-4deg);
 }
 
-.colecao__selo {
-  position: absolute;
-  right: var(--s-4);
-  bottom: var(--s-4);
-  padding: var(--s-2) var(--s-3);
-  background: var(--pastel-petal);
-  color: var(--ink);
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  transform: rotate(-3deg);
-}
-
 .colecao__avatar {
   position: relative;
   width: clamp(100px, 15vw, 150px);
   aspect-ratio: 1;
-  margin: -50px 0 var(--s-4) var(--s-5);
+  margin: -50px auto var(--s-4);
   border: 6px solid var(--paper);
   border-radius: 50%;
   overflow: hidden;
@@ -1550,6 +1424,31 @@ textarea {
   color: var(--ink-2);
 }
 
+.colecao__admin-fotos {
+  margin-top: var(--s-4);
+  padding: var(--s-4);
+  border: 1px dashed var(--razzmatazz);
+  border-radius: var(--radius);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+.colecao__admin-titulo {
+  width: 100%;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.colecao__admin-form {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: 0.85rem;
+}
+
 .colecao-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -1570,6 +1469,7 @@ textarea {
   display: grid;
   gap: var(--s-6);
   align-items: start;
+  grid-template-columns: 250px minmax(0, 1fr);
 }
 
 .colecao-filtros {
@@ -1594,38 +1494,14 @@ textarea {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
 }
 
-@media (min-width: 900px) {
-  .colecao-layout {
-    grid-template-columns: 250px minmax(0, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .colecao-toolbar .campo {
-    flex: 1 1 55%;
-  }
-
-  .colecao__selo {
-    top: var(--s-4);
-    bottom: auto;
-  }
-}
-
 /* -------------------------------------------------------------------------
    12. Detalhe do produto
    ------------------------------------------------------------------------- */
 .detalhe {
   display: grid;
-  gap: var(--s-6);
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 900px) {
-  .detalhe {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    gap: var(--s-8);
-    align-items: start;
-  }
+  gap: var(--s-8);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: start;
 }
 
 .detalhe__info {
@@ -1856,14 +1732,8 @@ textarea {
 .carrinho {
   display: grid;
   gap: var(--s-6);
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 900px) {
-  .carrinho {
-    grid-template-columns: 1fr 340px;
-    align-items: start;
-  }
+  grid-template-columns: 1fr 340px;
+  align-items: start;
 }
 
 .item {
@@ -1917,13 +1787,8 @@ textarea {
   background: var(--paper);
   display: grid;
   gap: var(--s-3);
-}
-
-@media (min-width: 900px) {
-  .resumo {
-    position: sticky;
-    top: calc(68px + var(--s-4));
-  }
+  position: sticky;
+  top: calc(68px + var(--s-4));
 }
 
 .resumo h2 {
@@ -1950,14 +1815,14 @@ textarea {
   font-size: var(--step-3);
 }
 
-/* Barra fixa de total no mobile */
+/* Barra fixa de total no mobile — mantida oculta (projeto sem layout mobile) */
 .barra-total {
+  display: none;
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 40;
-  display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--s-3);
@@ -1972,33 +1837,13 @@ textarea {
   font-size: var(--step-2);
 }
 
-@media (min-width: 900px) {
-  .barra-total {
-    display: none;
-  }
-}
-
-@media (max-width: 899px) {
-
-  .carrinho,
-  .checkout {
-    margin-bottom: 72px;
-  }
-}
-
 /* -------------------------------------------------------------------------
    15. Login — split
    ------------------------------------------------------------------------- */
 .split {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 45% 55%;
   min-height: calc(100vh - 68px);
-}
-
-@media (min-width: 860px) {
-  .split {
-    grid-template-columns: 45% 55%;
-  }
 }
 
 .split__marca {

@@ -50,7 +50,6 @@ function posterArtista(array $a): string
                 <span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($a['nome'])) ?></span>
             <?php endif; ?>
             <span class="tag"><?= (int) ($a['total'] ?? 0) ?> produtos</span>
-            <span class="poster__nome"><?= escapar($a['nome']) ?></span>
         </div>
         <div class="poster__meta">
             <span class="poster__meta-desc"><?= escapar($a['descricao'] ?? '') ?></span>

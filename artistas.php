@@ -2,6 +2,24 @@
 require_once __DIR__ . '/config/app.php';
 require_once __DIR__ . '/includes/poster.php';
 
+// Upload de banner/ícone do artista pelo admin, direto nesta página.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['campo_imagem'])) {
+    exigirAdministrador();
+    $artistaIdPost = (int) ($_POST['artista_id'] ?? 0);
+    $coluna = $_POST['campo_imagem'] === 'banner' ? 'imagem_banner' : 'imagem';
+    if ($artistaIdPost && isset($_FILES['nova_imagem']) && $_FILES['nova_imagem']['error'] === UPLOAD_ERR_OK) {
+        $ext = strtolower(pathinfo(basename($_FILES['nova_imagem']['name']), PATHINFO_EXTENSION));
+        if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'svg', 'gif'], true)) {
+            $nomeArquivo = 'artista_' . $artistaIdPost . '_' . $coluna . '_' . time() . '.' . $ext;
+            $destino = __DIR__ . '/assets/img/artistas/' . $nomeArquivo;
+            if (move_uploaded_file($_FILES['nova_imagem']['tmp_name'], $destino)) {
+                update($pdo, 'artistas', [$coluna => 'assets/img/artistas/' . $nomeArquivo], 'id = ?', [$artistaIdPost]);
+            }
+        }
+    }
+    redirecionar('artistas.php?artista=' . $artistaIdPost);
+}
+
 $colecao = array_key_exists('artista', $_GET);
 $id = filter_var(is_string($_GET['artista'] ?? null) ? $_GET['artista'] : '', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 $artista = null;
@@ -45,7 +63,8 @@ if ($pdo && !$colecao) {
         $categorias = array_values(array_unique(array_column($itensArtista, 'categoria')));
         sort($categorias);
         $produtos = buscarProdutos($pdo, $filtros);
-        $imagemArtista = obterCaminhoImagem(null, 'artistas', $id);
+        $imagemBanner = obterCaminhoImagem($artista['imagem_banner'] ?? null, 'artistas', $id . '_banner');
+        $imagemIcone = obterCaminhoImagem($artista['imagem'] ?? null, 'artistas', $id);
         $corArtista = acentoPoster($artista['nome']);
     }
 }
@@ -80,16 +99,15 @@ require __DIR__ . '/includes/header.php';
         <a class="btn--texto colecao__voltar" href="artistas.php">← Todos os artistas</a>
         <header class="colecao poster--c<?= $corArtista ?>">
             <div class="colecao__banner" aria-hidden="true">
-                <?php if ($imagemArtista): ?>
-                    <img src="<?= escapar($imagemArtista) ?>" alt="">
+                <?php if ($imagemBanner): ?>
+                    <img src="<?= escapar($imagemBanner) ?>" alt="">
                 <?php else: ?>
                     <span class="colecao__marca"><?= escapar($artista['nome']) ?></span>
                 <?php endif; ?>
-                <span class="colecao__selo">MagicMerch / Coleção</span>
             </div>
             <div class="colecao__avatar" aria-hidden="true">
-                <?php if ($imagemArtista): ?>
-                    <img src="<?= escapar($imagemArtista) ?>" alt="">
+                <?php if ($imagemIcone): ?>
+                    <img src="<?= escapar($imagemIcone) ?>" alt="">
                 <?php else: ?>
                     <span><?= escapar(inicial($artista['nome'])) ?></span>
                 <?php endif; ?>
@@ -99,6 +117,24 @@ require __DIR__ . '/includes/header.php';
                 <p><?= nl2br(escapar($artista['descricao'] ?? '')) ?></p>
             </div>
         </header>
+
+        <?php if (eAdministrador()): ?>
+            <div class="colecao__admin-fotos">
+                <p class="colecao__admin-titulo">Modo administrador — enviar novas fotos</p>
+                <form method="post" enctype="multipart/form-data" class="colecao__admin-form">
+                    <input type="hidden" name="artista_id" value="<?= (int) $id ?>">
+                    <input type="hidden" name="campo_imagem" value="banner">
+                    <label>Banner <input type="file" name="nova_imagem" accept="image/*" required></label>
+                    <button type="submit" class="btn btn--linha">Enviar banner</button>
+                </form>
+                <form method="post" enctype="multipart/form-data" class="colecao__admin-form">
+                    <input type="hidden" name="artista_id" value="<?= (int) $id ?>">
+                    <input type="hidden" name="campo_imagem" value="icone">
+                    <label>Ícone <input type="file" name="nova_imagem" accept="image/*" required></label>
+                    <button type="submit" class="btn btn--linha">Enviar ícone</button>
+                </form>
+            </div>
+        <?php endif; ?>
 
         <div class="colecao-toolbar">
             <a class="btn btn--linha" href="#filtros-artista">Filtrar ↓</a>

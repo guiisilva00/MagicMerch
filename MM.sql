@@ -15,11 +15,15 @@ CREATE TABLE
         data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
+-- Banco já existente? Rode manualmente antes de usar a página de artistas:
+-- ALTER TABLE artistas ADD COLUMN imagem VARCHAR(255), ADD COLUMN imagem_banner VARCHAR(255);
 CREATE TABLE
     artistas (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(150) NOT NULL UNIQUE,
-        descricao TEXT
+        descricao TEXT,
+        imagem VARCHAR(255),
+        imagem_banner VARCHAR(255)
     );
 
 CREATE TABLE

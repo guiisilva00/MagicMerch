@@ -73,7 +73,6 @@ if ($pdo) {
     <section class="porque" aria-labelledby="porque-titulo">
         <div class="container porque__grade">
             <header class="porque__cabecalho">
-                <p class="porque__sobretitulo">MagicMerch</p>
                 <h2 id="porque-titulo" class="porque__titulo">Por que<br>nós?</h2>
             </header>
 

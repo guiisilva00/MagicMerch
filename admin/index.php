@@ -4,32 +4,33 @@ $subtituloAdmin = 'Visão geral da sua loja';
 $paginaAdminAtiva = 'dashboard';
 require __DIR__ . '/../includes/cabecalho-admin.php';
 
-// Carregamento de dados (banco ou fallback demonstrativo)
-$pedidos = [];
-$itensPedido = [];
-$produtos = [];
-$artistas = [];
-$usuarios = [];
-
-if ($pdo !== null) {
-    try {
-        $pedidos = readAll($pdo, 'pedidos', '1 ORDER BY data_pedido DESC');
-        $itensPedido = readAll($pdo, 'itens_pedido');
-        $produtos = readAll($pdo, 'produtos', '1 ORDER BY vendas DESC, id DESC');
-        $artistas = indexarPorId(readAll($pdo, 'artistas'));
-        $usuarios = indexarPorId(readAll($pdo, 'usuarios'));
-    } catch (Throwable $e) {
-        // Fallback para dados demonstrativos
-    }
-}
+// Carregamento de dados do banco. Se ainda não houver pedidos cadastrados,
+// mostramos números de exemplo abaixo (fallback demonstrativo).
+$pedidos = readAll($pdo, 'pedidos', '1 ORDER BY data_pedido DESC');
+$itensPedido = readAll($pdo, 'itens_pedido');
+$produtos = readAll($pdo, 'produtos', '1 ORDER BY vendas DESC, id DESC');
+$artistas = indexarPorId(readAll($pdo, 'artistas'));
+$usuarios = indexarPorId(readAll($pdo, 'usuarios'));
 
 // 1. CARDS DE RESUMO
 if (!empty($pedidos)) {
-    $pedidosPagos = array_filter($pedidos, fn($p) => (int) ($p['pagamento_confirmado'] ?? 0) === 1);
-    $totalVendas = (float) array_sum(array_column($pedidosPagos, 'valor_total'));
+    $totalVendas = 0;
+    foreach ($pedidos as $ped) {
+        if ((int) ($ped['pagamento_confirmado'] ?? 0) === 1) {
+            $totalVendas += (float) $ped['valor_total'];
+        }
+    }
     $totalPedidos = count($pedidos);
-    $totalProdutosVendidos = (int) array_sum(array_column($itensPedido, 'quantidade'));
-    $totalProdutosEstoque = (int) array_sum(array_column($produtos, 'estoque'));
+
+    $totalProdutosVendidos = 0;
+    foreach ($itensPedido as $item) {
+        $totalProdutosVendidos += (int) $item['quantidade'];
+    }
+
+    $totalProdutosEstoque = 0;
+    foreach ($produtos as $p) {
+        $totalProdutosEstoque += (int) $p['estoque'];
+    }
 } else {
     $totalVendas = 12480.00;
     $totalPedidos = 128;
