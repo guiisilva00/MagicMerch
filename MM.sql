@@ -5,6 +5,15 @@ SET
 USE magicmerch_db;
 
 CREATE TABLE
+    mensagens_suporte (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(100) NOT NULL,
+        email VARCHAR(190) NOT NULL,
+        mensagem TEXT NOT NULL,
+        data_envio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE
     usuarios (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(100) NOT NULL,

@@ -9,6 +9,7 @@
                 <a href="index.php">Início</a>
                 <a href="produtos.php">Produtos</a>
                 <a href="artistas.php">Artistas e bandas</a>
+                <a href="suporte.php">Suporte</a>
             </div>
             <div class="rodape__col">
                 <h3>Conta</h3>
