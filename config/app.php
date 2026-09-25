@@ -22,10 +22,26 @@ try {
 // ----------------------------------------------------------------------------
 // Helpers gerais
 // ----------------------------------------------------------------------------
-function escapar(string $valor): string { return htmlspecialchars($valor, ENT_QUOTES, 'UTF-8'); }
-function usuarioAtual(): ?array { return $_SESSION['usuario'] ?? null; }
-function estaLogado(): bool { return usuarioAtual() !== null; }
-function eAdministrador(): bool { return estaLogado() && usuarioAtual()['tipo'] === 'administrador'; }
+function escapar(string $valor): string
+{
+    return htmlspecialchars($valor, ENT_QUOTES, 'UTF-8');
+}
+
+function usuarioAtual(): ?array
+{
+    return $_SESSION['usuario'] ?? null;
+}
+
+function estaLogado(): bool
+{
+    return usuarioAtual() !== null;
+}
+
+function eAdministrador(): bool
+{
+    return estaLogado() && usuarioAtual()['tipo'] === 'administrador';
+}
+
 function redirecionar(string $url): never {
     if (!headers_sent()) {
         header('Location: ' . $url);
@@ -34,16 +50,51 @@ function redirecionar(string $url): never {
     }
     exit;
 }
-function exigirLogin(string $destino = 'login.php'): void { if (!estaLogado()) { $_SESSION['retorno'] = basename($_SERVER['PHP_SELF']); redirecionar($destino); } }
-function exigirAdministrador(): void { if (!eAdministrador()) { redirecionar('login.php'); } }
-function mensagemFlash(?string $tipo = null, ?string $texto = null): ?array { if ($tipo !== null) { $_SESSION['flash'] = [$tipo, $texto]; return null; } $m = $_SESSION['flash'] ?? null; unset($_SESSION['flash']); return $m; }
-function valorMoeda(float $valor): string { return 'R$ ' . number_format($valor, 2, ',', '.'); }
+function exigirLogin(string $destino = 'login.php'): void
+{
+    if (estaLogado()) {
+        return;
+    }
+
+    $_SESSION['retorno'] = basename($_SERVER['PHP_SELF']);
+    redirecionar($destino);
+}
+
+function exigirAdministrador(): void
+{
+    if (!eAdministrador()) {
+        redirecionar('login.php');
+    }
+}
+
+function mensagemFlash(?string $tipo = null, ?string $texto = null): ?array
+{
+    if ($tipo !== null) {
+        $_SESSION['flash'] = [$tipo, $texto];
+        return null;
+    }
+
+    $mensagem = $_SESSION['flash'] ?? null;
+    unset($_SESSION['flash']);
+    return $mensagem;
+}
+
+function valorMoeda(float $valor): string
+{
+    return 'R$ ' . number_format($valor, 2, ',', '.');
+}
 
 // Cor do pôster (1..5) derivada de um texto estável (nome do artista, categoria...).
-function acentoPoster(string $chave): int { return (int) (crc32($chave) % 5) + 1; }
+function acentoPoster(string $chave): int
+{
+    return (int) (crc32($chave) % 5) + 1;
+}
 
 // Primeira letra visível de um nome, em maiúscula, para a inicial-fantasma dos pôsteres.
-function inicial(string $nome): string { return mb_strtoupper(mb_substr(trim($nome), 0, 1)); }
+function inicial(string $nome): string
+{
+    return mb_strtoupper(mb_substr(trim($nome), 0, 1));
+}
 
 /**
  * Identifica se um produto é uma peça de vestuário/roupa (camiseta, moletom, etc.)
@@ -83,11 +134,15 @@ function eRoupa(?array $produto): bool
  */
 function obterCaminhoImagem(?string $imagem, string $pasta = 'produtos', $identificador = null): ?string
 {
-    if (!empty($imagem)) {
+    if ($imagem !== null && trim($imagem) !== '') {
         $caminho = trim($imagem);
-        if (preg_match('#^https?://#i', $caminho) || str_starts_with($caminho, '/') || str_starts_with($caminho, 'assets/')) {
+        $caminhoJaCompleto = preg_match('#^https?://#i', $caminho)
+            || str_starts_with($caminho, '/')
+            || str_starts_with($caminho, 'assets/');
+        if ($caminhoJaCompleto) {
             return $caminho;
         }
+
         $caminhoRelativo = 'assets/img/' . trim($pasta, '/') . '/' . ltrim($caminho, '/');
         if (file_exists(__DIR__ . '/../' . $caminhoRelativo)) {
             return $caminhoRelativo;
@@ -95,14 +150,15 @@ function obterCaminhoImagem(?string $imagem, string $pasta = 'produtos', $identi
         return $caminho;
     }
 
-    if ($identificador !== null && $identificador !== '') {
-        $extensoes = ['jpg', 'jpeg', 'png', 'webp', 'svg', 'jfif'];
-        $base = 'assets/img/' . trim($pasta, '/') . '/';
-        foreach ($extensoes as $ext) {
-            $teste = $base . $identificador . '.' . $ext;
-            if (file_exists(__DIR__ . '/../' . $teste)) {
-                return $teste;
-            }
+    if ($identificador === null || $identificador === '') {
+        return null;
+    }
+
+    $base = 'assets/img/' . trim($pasta, '/') . '/' . $identificador;
+    foreach (['jpg', 'jpeg', 'png', 'webp', 'svg', 'jfif'] as $extensao) {
+        $caminho = $base . '.' . $extensao;
+        if (file_exists(__DIR__ . '/../' . $caminho)) {
+            return $caminho;
         }
     }
 
@@ -224,12 +280,12 @@ function buscarProdutos(PDO $pdo, array $filtros): array
         $condicoes[] = 'estoque = 0';
     }
 
-    $ordenacao = match ($filtros['ordenacao']) {
+    $ordenacoes = [
         'menor_preco' => 'preco ASC',
         'maior_preco' => 'preco DESC',
         'alfabetica' => 'nome ASC',
-        default => 'destaque DESC, vendas DESC',
-    };
+    ];
+    $ordenacao = $ordenacoes[$filtros['ordenacao']] ?? 'destaque DESC, vendas DESC';
 
     $where = ($condicoes ? implode(' AND ', $condicoes) : '1') . ' ORDER BY ' . $ordenacao;
     $produtos = readAll($pdo, 'produtos', $where, $parametros);
@@ -244,35 +300,28 @@ function buscarProdutos(PDO $pdo, array $filtros): array
 // ----------------------------------------------------------------------------
 // Regras de negócio simples
 // ----------------------------------------------------------------------------
-function calcularFrete(string $modalidade, string $estado = ''): float { if ($modalidade === 'retirada') return 0; return strtoupper(trim($estado)) === 'SP' || stripos($estado, 'são paulo') !== false ? 10 : 20; }
-function statusPedido(): array { return ['aguardando_pagamento'=>'Aguardando pagamento','pagamento_confirmado'=>'Pagamento confirmado','em_producao_separacao'=>'Em produção/separação','enviado'=>'Enviado','concluido'=>'Concluído']; }
+function calcularFrete(string $modalidade, string $estado = ''): float
+{
+    if ($modalidade === 'retirada') {
+        return 0;
+    }
+
+    $estadoNormalizado = strtoupper(trim($estado));
+    $ehSaoPaulo = $estadoNormalizado === 'SP' || stripos($estado, 'são paulo') !== false;
+    return $ehSaoPaulo ? 10 : 20;
+}
+
+function statusPedido(): array
+{
+    return [
+        'aguardando_pagamento' => 'Aguardando pagamento',
+        'pagamento_confirmado' => 'Pagamento confirmado',
+        'em_producao_separacao' => 'Em produção/separação',
+        'enviado' => 'Enviado',
+        'concluido' => 'Concluído',
+    ];
+}
 
 // ----------------------------------------------------------------------------
 // Conteúdo estático das páginas institucionais
 // ----------------------------------------------------------------------------
-$linksNavegacao = [
-    ['rotulo' => 'Início', 'possuiSubmenu' => false, 'url' => 'index.php'],
-    ['rotulo' => 'Produtos', 'possuiSubmenu' => true, 'url' => 'produtos.php'],
-    ['rotulo' => 'Artistas e bandas', 'possuiSubmenu' => false, 'url' => 'artistas.php'],
-];
-
-$slidesDestaque = [
-    [
-        'colecao' => 'Coleção Verão 2025',
-        'temporada' => 'SS25',
-        'chamada' => ['NOVO', 'DROP'],
-        'subtitulo' => 'Exclusivo & artesanal',
-        'descricao' => 'Peças únicas feitas à mão por artistas independentes. Cada item conta uma história.',
-        'acao' => 'Ver coleção',
-        'paineis' => ['Coleção de verão', 'Peça artesanal', 'Produto da coleção', 'Visual da coleção'],
-    ],
-    [
-        'colecao' => 'Artistas em destaque',
-        'temporada' => 'LIMITADA',
-        'chamada' => ['FEITO', 'À MÃO'],
-        'subtitulo' => 'Edição limitada',
-        'descricao' => 'Cards colecionáveis, moletons e acessórios exclusivos. Estoque limitado.',
-        'acao' => 'Explorar artistas',
-        'paineis' => ['Peça artesanal', 'Visual urbano', 'Camiseta da coleção', 'Visual de campanha'],
-    ],
-];

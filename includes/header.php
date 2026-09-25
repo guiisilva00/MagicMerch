@@ -31,10 +31,9 @@ try {
             <a class="logo" href="index.php"><img src="assets/img/logo/logo.svg" alt="MagicMerch"></a>
 
             <nav class="nav" aria-label="Navegação principal">
-                <?php foreach ($linksNavegacao as $link): ?>
-                    <a href="<?= escapar($link['url']) ?>"
-                        class="nav__link <?= $paginaNavegacaoAtiva === $link['rotulo'] ? 'nav__link--ativo' : '' ?>"><?= escapar($link['rotulo']) ?></a>
-                <?php endforeach; ?>
+                <a href="index.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Início' ? 'nav__link--ativo' : '' ?>">Início</a>
+                <a href="produtos.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Produtos' ? 'nav__link--ativo' : '' ?>">Produtos</a>
+                <a href="artistas.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Artistas e bandas' ? 'nav__link--ativo' : '' ?>">Artistas e bandas</a>
             </nav>
 
             <div class="acoes">
@@ -46,9 +45,9 @@ try {
                 <details class="menu">
                     <summary class="menu__resumo" aria-label="Menu"><?= icone('menu') ?></summary>
                     <div class="menu__lista">
-                        <?php foreach ($linksNavegacao as $link): ?>
-                            <a href="<?= escapar($link['url']) ?>"><?= escapar($link['rotulo']) ?></a>
-                        <?php endforeach; ?>
+                        <a href="index.php">Início</a>
+                        <a href="produtos.php">Produtos</a>
+                        <a href="artistas.php">Artistas e bandas</a>
                         <a href="<?= estaLogado() ? 'perfil.php' : 'login.php' ?>"><?= estaLogado() ? 'Minha conta' : 'Entrar' ?></a>
                     </div>
                 </details>

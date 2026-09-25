@@ -37,11 +37,12 @@ Saída / navegação: `escapar($valor)` (htmlspecialchars), `redirecionar($url)`
 
 Consultas prontas (atalhos finos sobre o CRUD):
 - `indexarPorId(array $linhas): array` — devolve `id => linha`.
-- `buscarArtistas($pdo)` / `buscarCategorias($pdo)`
+- `buscarArtistas($pdo)` / `buscarCategorias($pdo)` — listas ordenadas de artistas e categorias.
 - `buscarProdutoPorId($pdo, $id)` — produto + `nome_artista`.
 - `buscarProdutos($pdo, array $filtros)` — catálogo com filtros e ordenação.
 - `quantidadeCarrinho($pdo, $usuarioId)` / `itensCarrinho($pdo, $usuarioId)` / `subtotalCarrinho($itens)`
+- `contarProdutosPorArtista(array $produtos)` — totais indexados por `artista_id`.
+- `obterCaminhoImagem($imagem, $pasta, $identificador)` — resolve URL, caminho ou arquivo local por identificador.
+- `eRoupa($produto)`, `acentoPoster($chave)` e `inicial($nome)` — helpers de apresentação de produtos e pôsteres.
 
 Regras de negócio: `calcularFrete($modalidade, $estado)`, `statusPedido()`.
-
-Conteúdo estático: `$linksNavegacao`, `$slidesDestaque`.
