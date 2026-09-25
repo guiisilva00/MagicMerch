@@ -1290,6 +1290,25 @@ textarea {
   color: var(--ink-2);
 }
 
+/* Imagens da página Sobre nós. */
+.sobre__imagem {
+  width: 100%;
+  max-width: 42rem;
+  aspect-ratio: 16 / 9;
+  margin-top: var(--s-5);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper-2);
+}
+
+.sobre__imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 /* -------------------------------------------------------------------------
    11. Catálogo — barra de filtros
    ------------------------------------------------------------------------- */

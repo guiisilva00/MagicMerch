@@ -1,0 +1,235 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 1100px;
+    margin: 0;
+    color: #292428;
+    background: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.container {
+    width: 1040px;
+    margin: 0 auto;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+h1, h2, h3, p {
+    margin: 0;
+}
+
+h1, h2, .logo {
+    font-family: Georgia, serif;
+    font-weight: normal;
+}
+
+.cabecalho {
+    height: 80px;
+    border-bottom: 1px solid #f0dce3;
+}
+
+.cabecalho-conteudo, .rodape-conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cabecalho-conteudo {
+    height: 80px;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.navegacao, .rodape-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.navegacao {
+    font-size: 14px;
+}
+
+.navegacao a {
+    padding: 8px 0;
+    border-bottom: 2px solid transparent;
+}
+
+.navegacao a[aria-current="page"] {
+    border-bottom-color: #cf86a0;
+}
+
+.secao {
+    padding: 28px 0;
+}
+
+.rosa {
+    background: #fcf0f4;
+}
+
+.colunas {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+}
+
+.historia-texto, .missao-texto {
+    width: 640px;
+}
+
+h1 {
+    font-size: 112px;
+    line-height: 1;
+}
+
+.linha {
+    width: 100px;
+    height: 1px;
+    margin: 20px 0;
+    background: #cf86a0;
+}
+
+.historia-legenda {
+    font-size: 18px;
+}
+
+.foto {
+    display: block;
+    flex-shrink: 0;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.historia-foto {
+    width: 320px;
+    height: 340px;
+}
+
+.retrato {
+    width: 320px;
+    height: 310px;
+}
+
+.missao-texto h2 {
+    font-size: 76px;
+    line-height: 1;
+}
+
+.missao-texto p {
+    width: 540px;
+}
+
+.destaque-foto {
+    width: 1040px;
+    height: 300px;
+    object-position: center;
+}
+
+.destaque-legenda {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-top: 20px;
+}
+
+.destaque-legenda h2 {
+    font-size: 52px;
+    line-height: 1.15;
+}
+
+.destaque-legenda .linha {
+    flex: 1;
+}
+
+.dna-texto {
+    width: 560px;
+}
+
+.dna-texto h2 {
+    font-size: 56px;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.dna-texto .linha {
+    width: 560px;
+    margin-bottom: 0;
+}
+
+.equipe-conteudo {
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.equipe-conteudo h2 {
+    width: 340px;
+    font-size: 48px;
+    line-height: 1.1;
+}
+
+.equipe-grade {
+    display: grid;
+    grid-template-columns: 310px 310px;
+    gap: 28px 40px;
+}
+
+.integrante {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.equipe-foto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 90px;
+    height: 110px;
+    background: #f4edef;
+    color: #75636b;
+    font-size: 12px;
+    text-align: center;
+}
+
+.integrante-texto {
+    font-size: 14px;
+}
+
+.integrante h3 {
+    font-size: 16px;
+}
+
+.funcao {
+    margin: 4px 0 10px;
+    color: #75636b;
+}
+
+.rodape {
+    padding: 28px 0;
+    background: #252126;
+    color: #ffffff;
+}
+
+.rodape-links {
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.copyright {
+    margin-top: 24px;
+    color: #d3cbd0;
+    font-size: 12px;
+}
