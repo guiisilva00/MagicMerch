@@ -2,7 +2,7 @@
 require_once 'config/app.php';
 
 $tituloPagina = 'Suporte';
-$paginaNavegacaoAtiva = '';
+$paginaNavegacaoAtiva = 'Suporte';
 $erroEnvio = '';
 $tabelaSuporteDisponivel = $pdo !== null;
 
