@@ -87,8 +87,8 @@ require __DIR__ . '/includes/header.php';
                         <div class="<?= $classeCampo ?>">
                             <?php if ($imgUrl): ?><img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($a['nome']) ?>" class="poster__img"><?php else: ?><span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($a['nome'])) ?></span><?php endif; ?>
                             <span class="tag"><?= (int) ($a['total'] ?? 0) ?> produtos</span>
+                            <span class="poster__nome"><?= escapar($a['nome']) ?></span>
                         </div>
-                        <div class="poster__meta"><span class="poster__meta-desc"><?= escapar($a['descricao'] ?? '') ?></span></div>
                     </a>
                 <?php endforeach; ?>
             </div>

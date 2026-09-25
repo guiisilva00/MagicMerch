@@ -114,8 +114,8 @@ if ($pdo) {
                         <div class="<?= $classeCampo ?>">
                             <?php if ($imgUrl): ?><img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($artista['nome']) ?>" class="poster__img"><?php else: ?><span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($artista['nome'])) ?></span><?php endif; ?>
                             <span class="tag"><?= (int) ($artista['total'] ?? 0) ?> produtos</span>
+                            <span class="poster__nome"><?= escapar($artista['nome']) ?></span>
                         </div>
-                        <div class="poster__meta"><span class="poster__meta-desc"><?= escapar($artista['descricao'] ?? '') ?></span></div>
                     </a>
                 <?php endforeach; ?>
             </div>
