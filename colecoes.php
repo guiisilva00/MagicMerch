@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/config/app.php';
 
+$paginaNavegacaoAtiva = 'Coleções especiais';
 require_once __DIR__ . '/includes/header.php';
 ?>
 

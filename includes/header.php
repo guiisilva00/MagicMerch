@@ -34,6 +34,7 @@ try {
                 <a href="index.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Início' ? 'nav__link--ativo' : '' ?>">Início</a>
                 <a href="produtos.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Produtos' ? 'nav__link--ativo' : '' ?>">Produtos</a>
                 <a href="artistas.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Artistas e bandas' ? 'nav__link--ativo' : '' ?>">Artistas e bandas</a>
+                <a href="colecoes.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Coleções especiais' ? 'nav__link--ativo' : '' ?>">Coleções especiais</a>
             </nav>
 
             <div class="acoes">
@@ -48,6 +49,7 @@ try {
                         <a href="index.php">Início</a>
                         <a href="produtos.php">Produtos</a>
                         <a href="artistas.php">Artistas e bandas</a>
+                        <a href="colecoes.php">Coleções especiais</a>
                         <a href="<?= estaLogado() ? 'perfil.php' : 'login.php' ?>"><?= estaLogado() ? 'Minha conta' : 'Entrar' ?></a>
                     </div>
                 </details>

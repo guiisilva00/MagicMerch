@@ -325,33 +325,3 @@ function statusPedido(): array
 // ----------------------------------------------------------------------------
 // Conteúdo estático das páginas institucionais
 // ----------------------------------------------------------------------------
-<<<<<<< HEAD
-$linksNavegacao = [
-    ['rotulo' => 'Início', 'possuiSubmenu' => false, 'url' => 'index.php'],
-    ['rotulo' => 'Produtos', 'possuiSubmenu' => true, 'url' => 'produtos.php'],
-    ['rotulo' => 'Artistas e bandas', 'possuiSubmenu' => false, 'url' => 'artistas.php'],
-    ['rotulo' => 'Coleções especiais', 'possuiSubmenu' => false, 'url' => 'colecoes.php'],
-];
-
-$slidesDestaque = [
-    [
-        'colecao' => 'Coleção Verão 2025',
-        'temporada' => 'SS25',
-        'chamada' => ['NOVO', 'DROP'],
-        'subtitulo' => 'Exclusivo & artesanal',
-        'descricao' => 'Peças únicas feitas à mão por artistas independentes. Cada item conta uma história.',
-        'acao' => 'Ver coleção',
-        'paineis' => ['Coleção de verão', 'Peça artesanal', 'Produto da coleção', 'Visual da coleção'],
-    ],
-    [
-        'colecao' => 'Artistas em destaque',
-        'temporada' => 'LIMITADA',
-        'chamada' => ['FEITO', 'À MÃO'],
-        'subtitulo' => 'Edição limitada',
-        'descricao' => 'Cards colecionáveis, moletons e acessórios exclusivos. Estoque limitado.',
-        'acao' => 'Explorar artistas',
-        'paineis' => ['Peça artesanal', 'Visual urbano', 'Camiseta da coleção', 'Visual de campanha'],
-    ],
-];
-=======
->>>>>>> bb5090a8026bee7c100055a5cb6cd6dbbf596af2

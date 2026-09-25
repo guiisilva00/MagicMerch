@@ -549,7 +549,7 @@ tbody tr:hover {
 
 /* -------------------------------------------------------------------------
    Compatibilidade com páginas administrativas existentes
-   (produtos.php, estoque.php, pedidos.php, relatorios.php, login.php)
+   (produtos.php, estoque.php, pedidos.php, login.php)
    ------------------------------------------------------------------------- */
 .form-admin {
     display: grid;
