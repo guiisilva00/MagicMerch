@@ -32,10 +32,12 @@ try {
 
             <nav class="nav" aria-label="Navegação principal">
                 <a href="index.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Início' ? 'nav__link--ativo' : '' ?>">Início</a>
+                <a href="sobre.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Sobre nós' ? 'nav__link--ativo' : '' ?>">Sobre nós</a>
                 <a href="produtos.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Produtos' ? 'nav__link--ativo' : '' ?>">Produtos</a>
                 <a href="artistas.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Artistas e bandas' ? 'nav__link--ativo' : '' ?>">Artistas e bandas</a>
                 <a href="suporte.php">Suporte</a>
                 <a href="colecoes.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Coleções especiais' ? 'nav__link--ativo' : '' ?>">Coleções especiais</a>
+                <a href="sobre.php" class="nav__link <?= $paginaNavegacaoAtiva === 'Sobre nós' ? 'nav__link--ativo' : '' ?>">Sobre nós</a>
             </nav>
 
             <div class="acoes">
@@ -48,10 +50,11 @@ try {
                     <summary class="menu__resumo" aria-label="Menu"><?= icone('menu') ?></summary>
                     <div class="menu__lista">
                         <a href="index.php">Início</a>
+                        <a href="sobre.php">Sobre nós</a>
                         <a href="produtos.php">Produtos</a>
                         <a href="artistas.php">Artistas e bandas</a>
                         <a href="suporte.php">Suporte</a>
-                <a href="colecoes.php">Coleções especiais</a>
+                        <a href="colecoes.php">Coleções especiais</a>
                         <a href="<?= estaLogado() ? 'perfil.php' : 'login.php' ?>"><?= estaLogado() ? 'Minha conta' : 'Entrar' ?></a>
                     </div>
                 </details>
