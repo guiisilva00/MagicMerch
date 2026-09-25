@@ -18,10 +18,8 @@ function posterProduto(array $p): string
                 <img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($p['nome']) ?>" class="poster__img">
             <?php else: ?>
                 <span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($p['nome_artista'] ?: $p['nome'])) ?></span>
+                <span class="poster__nome"><?= escapar($p['nome']) ?></span>
             <?php endif; ?>
-            <?php if (!empty($p['categoria'])): ?><span class="tag"><?= escapar($p['categoria']) ?></span><?php endif; ?>
-            <span class="poster__nome"><?= escapar($p['nome']) ?></span>
-            <span class="poster__campo-preco">R$ <?= number_format((float) $p['preco'], 2, ',', '.') ?></span>
             <?php if ($esgotado): ?><span class="poster__esgotado">Esgotado</span><?php endif; ?>
         </div>
         <div class="poster__meta">

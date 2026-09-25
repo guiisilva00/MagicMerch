@@ -1,11 +1,15 @@
 <?php
-$tituloPaginaAdmin = 'Gestão de pedidos';
-require __DIR__ . '/../includes/cabecalho-admin.php';
+require_once __DIR__ . '/../config/app.php';
+exigirAdministrador();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     update($pdo, 'pedidos', ['status' => $_POST['status']], 'id = ?', [(int) $_POST['id']]);
     redirecionar('pedidos.php');
 }
+
+$tituloPaginaAdmin = 'Gestão de pedidos';
+require __DIR__ . '/../includes/cabecalho-admin.php';
+
 $ps = readAll($pdo, 'pedidos', '1 ORDER BY data_pedido DESC');
 $clientes = indexarPorId(readAll($pdo, 'usuarios'));
 ?>

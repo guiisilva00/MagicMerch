@@ -1,6 +1,6 @@
 <?php
-$tituloPaginaAdmin = 'Gestão de produtos';
-require __DIR__ . '/../includes/cabecalho-admin.php';
+require_once __DIR__ . '/../config/app.php';
+exigirAdministrador();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['excluir'])) {
@@ -42,6 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     redirecionar('produtos.php');
 }
+
+$tituloPaginaAdmin = 'Gestão de produtos';
+require __DIR__ . '/../includes/cabecalho-admin.php';
 
 $ed = isset($_GET['editar']) ? read($pdo, 'produtos', 'id = ?', [(int) $_GET['editar']]) : null;
 $arts = readAll($pdo, 'artistas', '1 ORDER BY nome');

@@ -405,3 +405,28 @@ VALUES
         'Único',
         0
     );
+INSERT INTO artistas (nome, descricao)
+VALUES ('The Weeknd', 'Cantor e compositor canadense de R&B e pop.')
+ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id);
+
+INSERT INTO produtos
+    (nome, descricao, preco, artista_id, categoria, estoque, imagem, cor, tamanho, destaque)
+VALUES
+    ('Camiseta The Weeknd - After Hours', 'Camiseta inspirada na estetica do album After Hours.', 69.90, (SELECT id FROM artistas WHERE nome = 'The Weeknd'), 'camiseta', 15, NULL, 'Preto', 'P, M, G, GG', 1),
+    ('Moletom The Weeknd - Dawn FM', 'Moletom com arte inspirada no album Dawn FM.', 129.90, (SELECT id FROM artistas WHERE nome = 'The Weeknd'), 'moletom', 8, NULL, 'Preto', 'P, M, G, GG', 1),
+    ('Caneca The Weeknd - XO', 'Caneca de ceramica para fas do universo XO.', 34.90, (SELECT id FROM artistas WHERE nome = 'The Weeknd'), 'caneca', 20, NULL, 'Preta', NULL, 0),
+    ('Poster The Weeknd - Starboy', 'Poster decorativo inspirado no album Starboy.', 39.90, (SELECT id FROM artistas WHERE nome = 'The Weeknd'), 'poster', 12, NULL, NULL, 'A3', 0),
+    ('Ecobag The Weeknd - XO', 'Ecobag de tecido com estampa inspirada na marca XO.', 44.90, (SELECT id FROM artistas WHERE nome = 'The Weeknd'), 'ecobag', 10, NULL, 'Preta', 'Unico', 0);
+
+INSERT INTO artistas (nome, descricao)
+VALUES ('Stray Kids', 'Grupo sul-coreano de K-pop.')
+ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id);
+
+INSERT INTO produtos
+    (nome, descricao, preco, artista_id, categoria, estoque, imagem, cor, tamanho, destaque)
+VALUES
+    ('Camiseta Stray Kids - SKZ', 'Camiseta inspirada na identidade visual do Stray Kids.', 69.90, (SELECT id FROM artistas WHERE nome = 'Stray Kids'), 'camiseta', 15, NULL, 'Preta', 'P, M, G, GG', 1),
+    ('Moletom Stray Kids - Maniac', 'Moletom com design inspirado na era Maniac.', 129.90, (SELECT id FROM artistas WHERE nome = 'Stray Kids'), 'moletom', 8, NULL, 'Preto', 'P, M, G, GG', 1),
+    ('Caneca Stray Kids - Stay', 'Caneca de ceramica para fas do Stray Kids.', 34.90, (SELECT id FROM artistas WHERE nome = 'Stray Kids'), 'caneca', 20, NULL, 'Branca', NULL, 0),
+    ('Poster Stray Kids - 5-Star', 'Poster decorativo inspirado no album 5-Star.', 39.90, (SELECT id FROM artistas WHERE nome = 'Stray Kids'), 'poster', 12, NULL, NULL, 'A3', 0),
+    ('Ecobag Stray Kids - Stay', 'Ecobag de tecido com estampa inspirada no fandom Stay.', 44.90, (SELECT id FROM artistas WHERE nome = 'Stray Kids'), 'ecobag', 10, NULL, 'Preta', 'Unico', 0);

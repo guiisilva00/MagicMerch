@@ -1,7 +1,7 @@
     <footer class="rodape">
         <div class="container rodape__grid">
             <div class="rodape__col">
-                <p class="rodape__marca">MagicMerch</p>
+                <img src="assets/img/logo/logo.svg" alt="MagicMerch" class="rodape__marca">
                 <p>Merch feito à mão dos seus artistas e bandas favoritos. Peças únicas, edições limitadas.</p>
             </div>
             <div class="rodape__col">
@@ -14,13 +14,12 @@
                 <h3>Conta</h3>
                 <a href="<?= estaLogado() ? 'perfil.php' : 'login.php' ?>"><?= estaLogado() ? 'Minha conta' : 'Entrar' ?></a>
                 <a href="carrinho.php">Carrinho</a>
-                <p>Pagamento Pix e cartão (simulados neste MVP).</p>
+                <p>Pagamento Pix e cartão de débito ou crédito.</p>
             </div>
         </div>
         <div class="container">
-            <p class="rodape__fim">&copy; <?= date('Y') ?> MagicMerch. Projeto acadêmico. Todos os direitos reservados.</p>
+            <p class="rodape__fim">&copy; <?= date('Y') ?> MagicMerch.   Todos os direitos reservados.</p>
         </div>
     </footer>
 </body>
-
 </html>

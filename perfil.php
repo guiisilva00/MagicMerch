@@ -46,6 +46,15 @@ require 'includes/header.php'; ?>
     <header class="conta__cabecalho">
         <h1>Olá, <?= escapar($u['nome']) ?></h1>
         <p><?= escapar($u['email']) ?> · <a class="btn--texto" href="login.php?sair=1">Sair da conta</a></p>
+        <?php if (eAdministrador()): ?>
+            <div style="margin-top: 1rem; padding: 0.85rem 1.25rem; background: #fff1f6; border: 1px solid var(--pastel-petal); border-radius: 8px; display: inline-flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+                <div>
+                    <strong style="color: var(--razzmatazz); display: block; font-size: 0.95rem;">Painel Administrativo</strong>
+                    <span style="font-size: 0.85rem; color: var(--ink-2);">Você possui permissões de administrador.</span>
+                </div>
+                <a href="admin/index.php" class="btn btn--primario">Entrar no Dashboard</a>
+            </div>
+        <?php endif; ?>
     </header>
 
     <section class="conta__secao">
