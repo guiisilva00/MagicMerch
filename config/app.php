@@ -254,6 +254,7 @@ $linksNavegacao = [
     ['rotulo' => 'Início', 'possuiSubmenu' => false, 'url' => 'index.php'],
     ['rotulo' => 'Produtos', 'possuiSubmenu' => true, 'url' => 'produtos.php'],
     ['rotulo' => 'Artistas e bandas', 'possuiSubmenu' => false, 'url' => 'artistas.php'],
+    ['rotulo' => 'Coleções especiais', 'possuiSubmenu' => false, 'url' => 'colecoes.php'],
 ];
 
 $slidesDestaque = [
