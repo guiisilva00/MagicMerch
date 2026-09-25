@@ -276,17 +276,16 @@ body.pagina-admin {
 }
 
 /* -------------------------------------------------------------------------
-   Grids e Painéis Gerais
+   Tabelas Administrativas e Badges
    ------------------------------------------------------------------------- */
+/* Grids e painéis do dashboard */
 .grid-dashboard {
     display: grid;
     gap: 1.5rem;
     margin-bottom: 1.75rem;
 }
 
-.grid-dashboard--duas-colunas {
-    grid-template-columns: 1fr 1fr;
-}
+.grid-dashboard--duas-colunas { grid-template-columns: 1fr 1fr; }
 
 .painel-card {
     background: var(--admin-card-bg);
@@ -309,103 +308,11 @@ body.pagina-admin {
     gap: 0.75rem;
 }
 
-.painel-card__titulo {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--admin-texto);
-}
+.painel-card__titulo { font-size: 1.125rem; font-weight: 600; color: var(--admin-texto); }
+.painel-card__subtitulo { font-size: 0.8125rem; color: var(--admin-mutado); margin-top: 0.1rem; }
+.painel-card__link { font-size: 0.8125rem; font-weight: 600; color: var(--razzmatazz); text-decoration: none; white-space: nowrap; }
+.painel-card__link:hover { text-decoration: underline; }
 
-.painel-card__subtitulo {
-    font-size: 0.8125rem;
-    color: var(--admin-mutado);
-    margin-top: 0.1rem;
-}
-
-.painel-card__opcoes {
-    display: flex;
-    gap: 0.35rem;
-    background: #f1f5f9;
-    padding: 0.25rem;
-    border-radius: var(--radius-sm);
-    flex-shrink: 0;
-}
-
-.opcao-periodo {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--admin-mutado);
-    padding: 0.25rem 0.65rem;
-    border-radius: 4px;
-    cursor: default;
-    user-select: none;
-    white-space: nowrap;
-}
-
-.opcao-periodo--ativo {
-    background: #ffffff;
-    color: var(--razzmatazz);
-    font-weight: 600;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.painel-card__link {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--razzmatazz);
-    text-decoration: none;
-    white-space: nowrap;
-}
-
-.painel-card__link:hover {
-    text-decoration: underline;
-}
-
-/* -------------------------------------------------------------------------
-   Gráfico de Vendas Visual (SVG + Eixo)
-   ------------------------------------------------------------------------- */
-.grafico-vendas-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-    min-width: 0;
-}
-
-.grafico-vendas-svg {
-    width: 100%;
-    height: auto;
-    max-height: 160px;
-    display: block;
-}
-
-.grafico-eixo-x {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem 1.25rem 0 1.25rem;
-    border-top: 1px solid var(--admin-borda-suave);
-}
-
-.grafico-coluna {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.15rem;
-}
-
-.grafico-coluna__mes {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--admin-texto);
-}
-
-.grafico-coluna__valor {
-    font-size: 0.7rem;
-    color: var(--admin-mutado);
-}
-
-/* -------------------------------------------------------------------------
-   Tabelas Administrativas e Badges
-   ------------------------------------------------------------------------- */
 .tabela-container {
     width: 100%;
     overflow-x: auto;

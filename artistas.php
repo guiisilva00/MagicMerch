@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/config/app.php';
-require_once __DIR__ . '/includes/poster.php';
 
 // Upload de banner/ícone do artista pelo admin, direto nesta página.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['campo_imagem'])) {
@@ -82,7 +81,16 @@ require __DIR__ . '/includes/header.php';
             <div class="vazio"><h2>Nenhum artista cadastrado</h2><p>Assim que houver artistas no catálogo, eles aparecem aqui.</p></div>
         <?php else: ?>
             <div class="grade grade--artistas" aria-label="Todos os artistas">
-                <?php foreach ($arts as $a): ?><?= posterArtista($a) ?><?php endforeach; ?>
+                <?php foreach ($arts as $a): ?>
+                    <?php $cor = acentoPoster($a['nome']); $imgUrl = obterCaminhoImagem($a['imagem'] ?? null, 'artistas', $a['id'] ?? null); $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : ''); ?>
+                    <a class="poster poster--artista poster--c<?= $cor ?>" href="artistas.php?artista=<?= (int) $a['id'] ?>">
+                        <div class="<?= $classeCampo ?>">
+                            <?php if ($imgUrl): ?><img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($a['nome']) ?>" class="poster__img"><?php else: ?><span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($a['nome'])) ?></span><?php endif; ?>
+                            <span class="tag"><?= (int) ($a['total'] ?? 0) ?> produtos</span>
+                        </div>
+                        <div class="poster__meta"><span class="poster__meta-desc"><?= escapar($a['descricao'] ?? '') ?></span></div>
+                    </a>
+                <?php endforeach; ?>
             </div>
         <?php endif; ?>
     <?php elseif (!$pdo): ?>
@@ -189,7 +197,16 @@ require __DIR__ . '/includes/header.php';
                     </div>
                 <?php else: ?>
                     <div class="grade">
-                        <?php foreach ($produtos as $produto): ?><?= posterProduto($produto) ?><?php endforeach; ?>
+                        <?php foreach ($produtos as $produto): ?>
+                            <?php $cor = acentoPoster($produto['categoria'] ?? $produto['nome']); $esgotado = (int) $produto['estoque'] <= 0; $imgUrl = obterCaminhoImagem($produto['imagem'] ?? null, 'produtos'); $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : ''); ?>
+                            <a class="poster poster--c<?= $cor ?>" href="produto.php?id=<?= (int) $produto['id'] ?>">
+                                <div class="<?= $classeCampo ?>">
+                                    <?php if ($imgUrl): ?><img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($produto['nome']) ?>" class="poster__img"><?php else: ?><span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($produto['nome_artista'] ?: $produto['nome'])) ?></span><span class="poster__nome"><?= escapar($produto['nome']) ?></span><?php endif; ?>
+                                    <?php if ($esgotado): ?><span class="poster__esgotado">Esgotado</span><?php endif; ?>
+                                </div>
+                                <div class="poster__meta"><span class="poster__meta-artista"><?= escapar($produto['nome_artista'] ?? '') ?></span><span class="poster__meta-nome"><?= escapar($produto['nome']) ?></span><span class="poster__meta-preco">R$ <?= number_format((float) $produto['preco'], 2, ',', '.') ?></span></div>
+                            </a>
+                        <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
             </section>
