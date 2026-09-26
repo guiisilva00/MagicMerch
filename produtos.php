@@ -4,13 +4,13 @@ $paginaNavegacaoAtiva = 'Produtos';
 require_once 'includes/header.php';
 
 $filtros = [
-    'busca' => trim($_GET['busca'] ?? ''),
-    'categoria' => $_GET['categoria'] ?? '',
-    'artista' => $_GET['artista'] ?? '',
-    'preco_minimo' => $_GET['preco_minimo'] ?? '',
-    'preco_maximo' => $_GET['preco_maximo'] ?? '',
-    'disponibilidade' => $_GET['disponibilidade'] ?? '',
-    'ordenacao' => $_GET['ordenacao'] ?? 'destaque',
+    'busca' => is_string($_GET['busca'] ?? null) ? trim($_GET['busca']) : '',
+    'categoria' => is_string($_GET['categoria'] ?? null) ? trim($_GET['categoria']) : '',
+    'artista' => is_string($_GET['artista'] ?? null) ? trim($_GET['artista']) : '',
+    'preco_minimo' => is_string($_GET['preco_minimo'] ?? null) ? trim($_GET['preco_minimo']) : '',
+    'preco_maximo' => is_string($_GET['preco_maximo'] ?? null) ? trim($_GET['preco_maximo']) : '',
+    'disponibilidade' => is_string($_GET['disponibilidade'] ?? null) ? trim($_GET['disponibilidade']) : '',
+    'ordenacao' => is_string($_GET['ordenacao'] ?? null) ? trim($_GET['ordenacao']) : 'destaque',
 ];
 $produtos = [];
 $artistas = [];

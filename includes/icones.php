@@ -1,8 +1,5 @@
 <?php
-/**
- * Ícones em SVG inline (traço único, 20px, herdam a cor via currentColor).
- * Sem biblioteca externa. Uso: <?= icone('sacola') ?>
- */
+
 function icone(string $nome, string $classe = ''): string
 {
     $paths = [
