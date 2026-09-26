@@ -198,7 +198,7 @@ require __DIR__ . '/includes/header.php';
                 <?php else: ?>
                     <div class="grade">
                         <?php foreach ($produtos as $produto): ?>
-                            <?php $cor = acentoPoster($produto['categoria'] ?? $produto['nome']); $esgotado = (int) $produto['estoque'] <= 0; $imgUrl = obterCaminhoImagem($produto['imagem'] ?? null, 'produtos'); $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : ''); ?>
+                            <?php $cor = acentoPoster($produto['categoria'] ?? $produto['nome']); $esgotado = (int) $produto['estoque'] <= 0; $imgUrl = obterCaminhoImagem($produto['imagem'] ?? null, 'produtos', $produto['id']); $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : ''); ?>
                             <a class="poster poster--c<?= $cor ?>" href="produto.php?id=<?= (int) $produto['id'] ?>">
                                 <div class="<?= $classeCampo ?>">
                                     <?php if ($imgUrl): ?><img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($produto['nome']) ?>" class="poster__img"><?php else: ?><span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($produto['nome_artista'] ?: $produto['nome'])) ?></span><span class="poster__nome"><?= escapar($produto['nome']) ?></span><?php endif; ?>

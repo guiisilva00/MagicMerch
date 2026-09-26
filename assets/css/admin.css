@@ -505,12 +505,6 @@ tbody tr:hover {
     object-fit: cover;
 }
 
-.produto-placeholder {
-    font-weight: 700;
-    color: var(--razzmatazz);
-    font-size: 1.125rem;
-}
-
 .card-produto-destaque__detalhes {
     display: flex;
     flex-direction: column;

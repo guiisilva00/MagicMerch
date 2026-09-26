@@ -105,7 +105,7 @@ if ($pdo === null) {
                 <?php
                 $cor = acentoPoster($produto['categoria'] ?? $produto['nome']);
                 $esgotado = (int) $produto['estoque'] <= 0;
-                $imgUrl = obterCaminhoImagem($produto['imagem'] ?? null, 'produtos');
+                $imgUrl = obterCaminhoImagem($produto['imagem'] ?? null, 'produtos', $produto['id']);
                 $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : '');
                 ?>
                 <a class="poster poster--c<?= $cor ?>" href="produto.php?id=<?= (int) $produto['id'] ?>">
