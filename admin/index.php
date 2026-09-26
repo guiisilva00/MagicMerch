@@ -85,11 +85,12 @@ if (!empty($produtos)) {
     foreach (array_slice($produtos, 0, 4) as $p) {
         $art = $artistas[$p['artista_id']]['nome'] ?? 'Artista';
         $maisVendidosLista[] = [
+            'id' => $p['id'],
             'nome' => $p['nome'],
             'artista' => $art,
             'vendas' => (int) ($p['vendas'] ?? 0),
             'preco' => valorMoeda((float) $p['preco']),
-            'imagem' => $p['imagem'] ?? '',
+            'imagem' => obterCaminhoImagem($p['imagem'] ?? null, 'produtos', $p['id']),
             'letra' => mb_strtoupper(mb_substr(trim($p['nome']), 0, 1))
         ];
     }
@@ -215,8 +216,8 @@ if (!empty($produtos)) {
             <?php foreach ($maisVendidosLista as $prod): ?>
                 <div class="card-produto-destaque">
                     <div class="card-produto-destaque__midia">
-                        <?php if (!empty($prod['imagem']) && file_exists(__DIR__ . '/../' . ltrim($prod['imagem'], '/'))): ?>
-                            <img src="../<?= escapar(ltrim($prod['imagem'], '/')) ?>" alt="<?= escapar($prod['nome']) ?>">
+                        <?php if ($prod['imagem']): ?>
+                            <img src="<?= str_starts_with($prod['imagem'], 'http') ? escapar($prod['imagem']) : '../' . escapar(ltrim($prod['imagem'], '/')) ?>" alt="<?= escapar($prod['nome']) ?>">
                         <?php else: ?>
                             <div class="produto-placeholder" aria-hidden="true"><?= escapar($prod['letra']) ?></div>
                         <?php endif; ?>

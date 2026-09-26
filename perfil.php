@@ -2,6 +2,13 @@
 exigirLogin();
 $u = usuarioAtual();
 $uid = (int) $u['id'];
+$pedidoRecemConfirmado = null;
+if (isset($_GET['pedido'])) {
+    $pedidoSolicitado = read($pdo, 'pedidos', 'id = ? AND usuario_id = ?', [(int) $_GET['pedido'], $uid]);
+    if ($pedidoSolicitado && $pedidoSolicitado['status'] === 'pagamento_confirmado') {
+        $pedidoRecemConfirmado = (int) $pedidoSolicitado['id'];
+    }
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_POST['acao'] === 'dados') {
         update($pdo, 'usuarios', ['nome' => trim($_POST['nome']), 'telefone' => trim($_POST['telefone'])], 'id = ?', [$uid]);
@@ -44,6 +51,7 @@ $classeStatus = fn($s) => $s === 'concluido' ? 'tag--ok' : ($s === 'aguardando_p
 require 'includes/header.php'; ?>
 <main class="container pagina">
     <header class="conta__cabecalho">
+        <?php if ($pedidoRecemConfirmado): ?><p class="msg msg--sucesso" role="status">Pedido #<?= $pedidoRecemConfirmado ?> confirmado com sucesso.</p><?php endif; ?>
         <h1>Olá, <?= escapar($u['nome']) ?></h1>
         <p><?= escapar($u['email']) ?> · <a class="btn--texto" href="login.php?sair=1">Sair da conta</a></p>
         <?php if (eAdministrador()): ?>

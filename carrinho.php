@@ -32,7 +32,12 @@ require 'includes/header.php'; ?>
             <section>
                 <?php foreach ($itens as $i): ?>
                     <form method="post" class="item">
-                        <span class="mini-poster poster--c<?= acentoPoster($i['nome']) ?>" aria-hidden="true"><?= escapar(inicial($i['nome'])) ?></span>
+                        <?php $imagemProduto = obterCaminhoImagem($i['imagem'] ?? null, 'produtos', $i['produto_id']); ?>
+                        <?php if ($imagemProduto): ?>
+                            <img class="mini-poster item__imagem" src="<?= escapar($imagemProduto) ?>" alt="<?= escapar($i['nome']) ?>">
+                        <?php else: ?>
+                            <span class="mini-poster poster--c<?= acentoPoster($i['nome']) ?>" aria-hidden="true"><?= escapar(inicial($i['nome'])) ?></span>
+                        <?php endif; ?>
                         <input type="hidden" name="produto_id" value="<?= $i['produto_id'] ?>">
                         <div class="item__info">
                             <p class="item__nome"><?= escapar($i['nome']) ?></p>
