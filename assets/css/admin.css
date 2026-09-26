@@ -61,20 +61,22 @@ body.pagina-admin {
 .sidebar-admin__brand {
     padding-bottom: 1.5rem;
     margin-bottom: 0.5rem;
+    padding-left: 0.9rem;
     border-bottom: 1px solid var(--admin-borda-suave);
 }
 
 .sidebar-admin__logo-link {
-    display: inline-flex;
-    align-items: center;
+    display: block;
+    width: 100%;
     text-decoration: none;
 }
 
 .sidebar-admin__logo {
-    height: 38px;
-    width: auto;
-    max-width: 190px;
+    width: 180px;
+    height: 62px;
     display: block;
+    object-fit: cover;
+    object-position: center;
 }
 
 .sidebar-admin__nav {
