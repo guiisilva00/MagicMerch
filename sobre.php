@@ -53,24 +53,5 @@ require_once 'includes/header.php';
         </div>
     </section>
 
-    <section class="faixa" aria-labelledby="equipe-titulo">
-        <div class="container sobre__colunas sobre__final">
-            <div>
-                <h2 id="equipe-titulo">A Equipe<br>MagicMerch</h2>
-            </div>
-            <div class="sobre__equipe">
-                <?php for ($integrante = 0; $integrante < 4; $integrante++): ?>
-                    <article class="sobre__integrante">
-                        <div class="sobre__foto" role="img" aria-label="Foto do integrante a preencher">Foto a preencher</div>
-                        <div>
-                            <h3>Nome a preencher</h3>
-                            <p>Função a preencher</p>
-                            <p>Descrição a preencher.</p>
-                        </div>
-                    </article>
-                <?php endfor; ?>
-            </div>
-        </div>
-    </section>
 </main>
 <?php require 'includes/footer.php'; ?>
