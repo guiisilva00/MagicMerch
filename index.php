@@ -107,7 +107,7 @@ if ($pdo) {
                 <?php foreach ($artistasDestaque as $artista): ?>
                     <?php
                     $cor = acentoPoster($artista['nome']);
-                    $imgUrl = obterCaminhoImagem($artista['imagem'] ?? null, 'artistas', $artista['id'] ?? null, $artista['nome'] ?? null);
+                    $imgUrl = obterCaminhoImagem($artista['imagem'] ?? null, 'artistas', $artista['id'] ?? null);
                     $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : '');
                     ?>
                     <a class="poster poster--artista poster--c<?= $cor ?>" href="artistas.php?artista=<?= (int) $artista['id'] ?>">

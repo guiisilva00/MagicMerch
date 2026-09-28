@@ -62,8 +62,8 @@ if ($pdo && !$colecao) {
         $categorias = array_values(array_unique(array_column($itensArtista, 'categoria')));
         sort($categorias);
         $produtos = buscarProdutos($pdo, $filtros);
-        $imagemBanner = obterCaminhoImagem($artista['imagem_banner'] ?? null, 'artistas', $id . '_banner', $artista['nome'] . '_banner');
-        $imagemIcone = obterCaminhoImagem($artista['imagem'] ?? null, 'artistas', $id, $artista['nome']);
+        $imagemBanner = obterCaminhoImagem($artista['imagem_banner'] ?? null, 'artistas', $id . '_banner');
+        $imagemIcone = obterCaminhoImagem($artista['imagem'] ?? null, 'artistas', $id);
         $corArtista = acentoPoster($artista['nome']);
     }
 }
@@ -82,7 +82,7 @@ require __DIR__ . '/includes/header.php';
         <?php else: ?>
             <div class="grade grade--artistas" aria-label="Todos os artistas">
                 <?php foreach ($arts as $a): ?>
-                    <?php $cor = acentoPoster($a['nome']); $imgUrl = obterCaminhoImagem($a['imagem'] ?? null, 'artistas', $a['id'] ?? null, $a['nome'] ?? null); $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : ''); ?>
+                    <?php $cor = acentoPoster($a['nome']); $imgUrl = obterCaminhoImagem($a['imagem'] ?? null, 'artistas', $a['id'] ?? null); $classeCampo = 'poster__campo' . ($imgUrl ? ' poster__campo--com-imagem' : ''); ?>
                     <a class="poster poster--artista poster--c<?= $cor ?>" href="artistas.php?artista=<?= (int) $a['id'] ?>">
                         <div class="<?= $classeCampo ?>">
                             <?php if ($imgUrl): ?><img src="<?= escapar($imgUrl) ?>" alt="<?= escapar($a['nome']) ?>" class="poster__img"><?php else: ?><span class="poster__inicial" aria-hidden="true"><?= escapar(inicial($a['nome'])) ?></span><?php endif; ?>
