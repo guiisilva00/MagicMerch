@@ -1234,7 +1234,9 @@ textarea {
   row-gap: var(--s-5);
 }
 
-.porque__cabecalho { grid-area: titulo; }
+.porque__cabecalho {
+  grid-area: titulo;
+}
 
 .porque__sobretitulo {
   margin-bottom: var(--s-3);
@@ -1356,7 +1358,7 @@ textarea {
   line-height: 1.5;
 }
 
-.sobre__texto h2 + p {
+.sobre__texto h2+p {
   max-width: 50ch;
   margin-top: var(--s-4);
   padding-top: var(--s-3);
@@ -1370,6 +1372,7 @@ textarea {
   gap: var(--s-3);
   font-size: 0.9375rem;
 }
+
 .sobre__texto .sobre__apresentacao {
   max-width: 45ch;
   margin-top: var(--s-5);
@@ -1718,7 +1721,7 @@ textarea {
 }
 
 /* Tamanho selecionado: borda rosa/roxa, fundo levemente rosado, texto destacado */
-.seletor-tamanho__radio:checked + .seletor-tamanho__botao {
+.seletor-tamanho__radio:checked+.seletor-tamanho__botao {
   border-color: var(--razzmatazz);
   background: #fff1f6;
   color: var(--razzmatazz);
@@ -1726,7 +1729,7 @@ textarea {
   box-shadow: 0 0 0 1px var(--razzmatazz);
 }
 
-.seletor-tamanho__radio:focus-visible + .seletor-tamanho__botao {
+.seletor-tamanho__radio:focus-visible+.seletor-tamanho__botao {
   outline: 2px solid var(--razzmatazz);
   outline-offset: 2px;
 }
@@ -2101,26 +2104,95 @@ textarea {
   }
 }
 
-.pagina-suporte { min-height: 60vh; }
-.suporte-hero { padding-block: var(--s-9); background: var(--paper-2); border-bottom: 1px solid var(--line); }
-.suporte-hero__inner { display: grid; grid-template-columns: 1fr minmax(180px, 0.55fr); align-items: center; gap: var(--s-8); }
-.suporte-hero .hero__titulo { margin-bottom: var(--s-5); }
-.suporte-hero .hero__lead { max-width: 52ch; color: var(--ink-2); }
-.suporte-foto { justify-self: end; width: 100%; max-width: 430px; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius); background: var(--pastel-petal); box-shadow: var(--shadow); }
-.suporte-foto img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
-.suporte-conteudo { display: grid; grid-template-columns: minmax(220px, .8fr) minmax(0, 1.2fr); gap: var(--s-8); padding-block: var(--s-9); align-items: start; }
-.suporte-nota { padding-top: var(--s-4); border-top: 1px solid var(--line); }
-.suporte-nota h2 { margin-bottom: var(--s-3); font-size: var(--step-2); }
-.suporte-nota p, .suporte-privacidade { color: var(--ink-2); font-size: var(--step--1); }
-.suporte-form { gap: var(--s-4); box-shadow: var(--shadow); }
-.suporte-form > h2 { margin-bottom: var(--s-2); }
-.suporte-form textarea { min-height: 160px; resize: vertical; }
-.suporte-form .btn { justify-self: start; }
-@media (max-width: 700px) {
-  .suporte-hero { padding-block: var(--s-7); }
-  .suporte-hero__inner { grid-template-columns: 1fr; }
-  .suporte-foto { justify-self: start; max-width: 100%; }
-  .suporte-conteudo { grid-template-columns: 1fr; gap: var(--s-6); padding-block: var(--s-7); }
+.pagina-suporte {
+  min-height: 60vh;
+}
+
+.suporte-hero {
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.suporte-hero__inner {
+  position: relative;
+  min-height: 540px;
+  padding-top: var(--s-9);
+}
+
+.suporte-hero__inner>div:first-child {
+  max-width: 48%;
+}
+
+.suporte-hero .hero__titulo {
+  margin-bottom: var(--s-5);
+}
+
+.suporte-hero .hero__lead {
+  max-width: 52ch;
+  color: var(--ink-2);
+}
+
+.suporte-foto {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 40%;
+  max-width: 430px;
+}
+
+.suporte-foto img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  transform: translateX(140px);
+}
+
+.suporte-conteudo {
+  display: grid;
+  grid-template-columns: minmax(220px, .8fr) minmax(0, 1.2fr);
+  gap: var(--s-8);
+  padding-block: var(--s-9);
+  align-items: start;
+}
+
+.suporte-nota {
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+}
+
+.suporte-nota h2 {
+  margin-bottom: var(--s-3);
+  font-size: var(--step-2);
+}
+
+.suporte-nota p,
+.suporte-privacidade {
+  color: var(--ink-2);
+  font-size: var(--step--1);
+}
+
+.suporte-form {
+  gap: var(--s-4);
+  box-shadow: var(--shadow);
+}
+
+.suporte-form>h2 {
+  margin-bottom: var(--s-2);
+}
+
+.suporte-form textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.suporte-form .btn {
+  justify-self: start;
 }
 
 @media (prefers-reduced-motion: reduce) {
