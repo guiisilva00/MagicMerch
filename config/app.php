@@ -132,7 +132,7 @@ function eRoupa(?array $produto): bool
  * no banco), basta o arquivo se chamar `{id}.{extensão}` dentro de
  * `assets/img/{produtos|artistas}/` — sem precisar editar nada em `MM.sql`.
  */
-function obterCaminhoImagem(?string $imagem, string $pasta = 'produtos', $identificador = null): ?string
+function obterCaminhoImagem(?string $imagem, string $pasta = 'produtos', $identificador = null, ?string $nomeAlternativo = null): ?string
 {
     if ($imagem !== null && trim($imagem) !== '') {
         $caminho = trim($imagem);
@@ -140,25 +140,39 @@ function obterCaminhoImagem(?string $imagem, string $pasta = 'produtos', $identi
             || str_starts_with($caminho, '/')
             || str_starts_with($caminho, 'assets/');
         if ($caminhoJaCompleto) {
-            return $caminho;
+            // Um caminho salvo no banco pode apontar para um upload que só existe
+            // na máquina onde foi enviado. Se o arquivo local não existir, tente
+            // os nomes compartilháveis por ID e pelo nome do artista abaixo.
+            if (preg_match('#^https?://#i', $caminho) || str_starts_with($caminho, '/') || file_exists(__DIR__ . '/../' . ltrim($caminho, '/'))) {
+                return $caminho;
+            }
+        } else {
+            $caminhoRelativo = 'assets/img/' . trim($pasta, '/') . '/' . ltrim($caminho, '/');
+            if (file_exists(__DIR__ . '/../' . $caminhoRelativo)) {
+                return $caminhoRelativo;
+            }
         }
-
-        $caminhoRelativo = 'assets/img/' . trim($pasta, '/') . '/' . ltrim($caminho, '/');
-        if (file_exists(__DIR__ . '/../' . $caminhoRelativo)) {
-            return $caminhoRelativo;
-        }
-        return $caminho;
     }
 
-    if ($identificador === null || $identificador === '') {
-        return null;
+    $bases = [];
+    if ($identificador !== null && $identificador !== '') {
+        $bases[] = (string) $identificador;
+    }
+    if ($nomeAlternativo !== null && trim($nomeAlternativo) !== '') {
+        $slug = strtolower(trim($nomeAlternativo));
+        $slug = preg_replace('/[^a-z0-9]+/', '_', iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $slug));
+        $slug = trim($slug, '_');
+        if ($slug !== '' && !in_array($slug, $bases, true)) {
+            $bases[] = $slug;
+        }
     }
 
-    $base = 'assets/img/' . trim($pasta, '/') . '/' . $identificador;
-    foreach (['jpg', 'jpeg', 'png', 'webp', 'svg', 'jfif'] as $extensao) {
-        $caminho = $base . '.' . $extensao;
-        if (file_exists(__DIR__ . '/../' . $caminho)) {
-            return $caminho;
+    foreach ($bases as $base) {
+        foreach (['jpg', 'jpeg', 'png', 'webp', 'svg', 'jfif', 'gif'] as $extensao) {
+            $caminho = 'assets/img/' . trim($pasta, '/') . '/' . $base . '.' . $extensao;
+            if (file_exists(__DIR__ . '/../' . $caminho)) {
+                return $caminho;
+            }
         }
     }
 
