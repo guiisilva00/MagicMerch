@@ -43,7 +43,7 @@ require_once 'includes/header.php';
                 <h1 class="hero__titulo">Fale com<br>a gente.</h1>
                 <p class="hero__lead">Conte o que aconteceu ou tire sua dúvida. Nossa equipe vai receber seu chamado.</p>
             </div>
-            <div class="suporte-foto"><img src="assets/img/artistas/taylor.jpg" alt="Taylor Swift em uma imagem promocional" loading="lazy"></div>
+            <div class="suporte-foto"><img src="assets/img/hero/suporte.svg" alt="Mulher usando um notebook" loading="lazy"></div>
         </div>
     </section>
     <section class="container suporte-conteudo" aria-labelledby="form-suporte-titulo">
