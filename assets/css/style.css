@@ -2103,16 +2103,18 @@ textarea {
 }
 
 .suporte-hero {
-  padding-block: var(--s-9);
   background: var(--paper-2);
   border-bottom: 1px solid var(--line);
 }
 
 .suporte-hero__inner {
-  display: grid;
-  grid-template-columns: 1fr minmax(180px, 0.55fr);
-  align-items: center;
-  gap: var(--s-8);
+  position: relative;
+  min-height: 540px;
+  padding-top: var(--s-9);
+}
+
+.suporte-hero__inner>div:first-child {
+  max-width: 48%;
 }
 
 .suporte-hero .hero__titulo {
@@ -2125,22 +2127,24 @@ textarea {
 }
 
 .suporte-foto {
-  justify-self: end;
-  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 40%;
   max-width: 430px;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: var(--radius);
-  background: var(--pastel-petal);
-  box-shadow: var(--shadow);
 }
 
 .suporte-foto img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
   display: block;
-  width: 100%;
+  width: auto;
   height: 100%;
+  max-width: none;
   object-fit: cover;
-  object-position: center 35%;
+  transform: translateX(140px);
 }
 
 .suporte-conteudo {
@@ -2191,12 +2195,27 @@ textarea {
   }
 
   .suporte-hero__inner {
-    grid-template-columns: 1fr;
+    min-height: 0;
+    padding-bottom: var(--s-7);
+  }
+
+  .suporte-hero__inner>div:first-child {
+    max-width: 100%;
   }
 
   .suporte-foto {
-    justify-self: start;
-    max-width: 100%;
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    height: 300px;
+    margin: var(--s-6) 0 calc(-1 * var(--s-7)) auto;
+    overflow: hidden;
+  }
+
+  .suporte-foto img {
+    right: 0;
+    height: 100%;
+    transform: none;
   }
 
   .suporte-conteudo {
